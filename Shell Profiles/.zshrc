@@ -1,0 +1,7 @@
+alias mk='ruby Scripts/make.rb'
+alias gen='ruby Scripts/generators.rb'
+alias format='ruby Scripts/format-and-lint.rb'
+alias hook='ruby Scripts/git-hooks.rb'
+alias mock='mint run swiftymocky generate'
+alias test='fastlane test'
+alias fastlane='bundle exec fastlane'
