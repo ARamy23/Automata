@@ -13,7 +13,7 @@ RBENV_INIT_LINE = 'rbenv init'
 DIRENV_INIT_LINE = 'direnv hook'
 
 desc "Onboards user by running the following tasks: ensure_files, install_homebrew, install_rbenv, install_direnv, source_files"
-task default: [:ensure_files, :install_homebrew, :install_rbenv, :install_direnv, :source_files]
+task default: [:ensure_files, :install_homebrew, :install_rbenv, :install_direnv, :source_files, :setup_secrets]
 
 desc "Verify if environment setup is correct"
 task verify: [:check_files, :check_homebrew, :check_rbenv, :check_direnv]
@@ -131,6 +131,28 @@ task :source_files do
   else
     puts "❌ Operation cancelled."
   end
+end
+
+task :setup_secrets do
+	puts "Setting up your secrets."
+  envFilePath = File.expand_path('.env')
+  arkanaFilePath = File.expand_path('.arkana.yml')
+
+  if !File.exist?(envFilePath) 
+    # Copy it from .env.example to .env
+    puts "❌ .env file is missing..."
+    puts "🔧 Copying .env.example to .env..."
+    system("cp .env.example .env")
+  end
+
+  unless File.exist?(envFilePath) && File.exist?(arkanaFilePath) 
+    puts "❌ .env or .arkana.yml file is missing."
+    return -1
+  end
+  
+  puts "🔧 Generating secrets from .arkana.yml & .env..."
+  system("bundle exec arkana")
+	puts "✅ Secrets installed successfully"
 end
 
 desc "Check if .zshenv, .zprofile, and .zshrc exist"

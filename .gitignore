@@ -82,5 +82,6 @@ fastlane/test_output
 iOSInjectionProject/
 
 .DS_Store
-
 .env
+Packages/Keys/**/*
+Packages/KeysInterfaces/**/*
