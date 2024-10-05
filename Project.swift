@@ -2,6 +2,10 @@ import ProjectDescription
 
 let project = Project(
     name: "Example",
+    packages: [
+        .package(path: "Packages/Keys"),
+        .package(path: "Packages/KeysInterfaces"),
+    ],
     settings: .settings(configurations: [
         .debug(name: .debug, xcconfig: .relativeToRoot("Configurations/Debug.xcconfig")),
         .debug(name: "Alpha", xcconfig: .relativeToRoot("Configurations/Alpha.xcconfig")),
@@ -25,7 +29,9 @@ let project = Project(
             sources: ["Example/Sources/**"],
             resources: ["Example/Resources/**"],
             dependencies: [
-                .external(name: "DSKit")
+                .external(name: "DSKit"),
+                .package(product: "Keys"),
+                .package(product: "KeysInterfaces")
             ]
         )
     ]

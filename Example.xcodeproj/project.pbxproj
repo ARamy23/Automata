@@ -15,9 +15,11 @@
 		6C19F54DA697611450C5F971 /* SDWebImageSwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E720921AE3F285C7EB5DC544 /* SDWebImageSwiftUI.framework */; };
 		76D12F5E957BD4A80DCA41FE /* DSKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A078422F18FE918237BE9B8 /* DSKit.framework */; };
 		84D4FD53BA03160728BB5D57 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 886894FED19AA3F13FBBCEC3 /* Assets.xcassets */; };
+		85832E9EB068A8B91FE8D8CF /* Keys in Frameworks */ = {isa = PBXBuildFile; productRef = 3CBCDDB6DBE4DF9B2D6BE89F /* Keys */; };
 		8E2D13379560A78004781110 /* ExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D388E5F03B21826EDE5719 /* ExampleApp.swift */; };
 		BB030FBBF6D3F31112AE9F82 /* TuistAssets+Example.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D87C574FECBE134E0A5E50 /* TuistAssets+Example.swift */; };
 		EBAC6F6297B2867F97EBFC37 /* SDWebImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4134CB2E9DBA29975537D82C /* SDWebImage.framework */; };
+		F36DEB6478A19B59F423D3D5 /* KeysInterfaces in Frameworks */ = {isa = PBXBuildFile; productRef = B51AE7FEDFBF89B4AC23B2FC /* KeysInterfaces */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -53,9 +55,11 @@
 		868537561430C425DFC57BF5 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		8729943E1D045ABF66CAAC62 /* Example-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Example-Info.plist"; sourceTree = "<group>"; };
 		886894FED19AA3F13FBBCEC3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		8DC522B56C6881A5EEFBD154 /* Keys */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Keys; path = Packages/Keys; sourceTree = "<group>"; };
 		95D87C574FECBE134E0A5E50 /* TuistAssets+Example.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TuistAssets+Example.swift"; sourceTree = "<group>"; };
 		9C8EC248F979AF4766814926 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		CAE4B4196C841D9C01FAB1D4 /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
+		CEA13FCB79CDE27DE968085A /* KeysInterfaces */ = {isa = PBXFileReference; lastKnownFileType = folder; name = KeysInterfaces; path = Packages/KeysInterfaces; sourceTree = "<group>"; };
 		CFDC3E3AE502A59A12780D1B /* SDWebImage_SDWebImage.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SDWebImage_SDWebImage.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		D483A182789A9A0E13B55113 /* TuistBundle+Example.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TuistBundle+Example.swift"; sourceTree = "<group>"; };
 		E720921AE3F285C7EB5DC544 /* SDWebImageSwiftUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SDWebImageSwiftUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -70,12 +74,23 @@
 				76D12F5E957BD4A80DCA41FE /* DSKit.framework in Frameworks */,
 				EBAC6F6297B2867F97EBFC37 /* SDWebImage.framework in Frameworks */,
 				6C19F54DA697611450C5F971 /* SDWebImageSwiftUI.framework in Frameworks */,
+				85832E9EB068A8B91FE8D8CF /* Keys in Frameworks */,
+				F36DEB6478A19B59F423D3D5 /* KeysInterfaces in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		12B9A666C278AB8CB5B6FA33 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				8DC522B56C6881A5EEFBD154 /* Keys */,
+				CEA13FCB79CDE27DE968085A /* KeysInterfaces */,
+			);
+			name = Packages;
+			sourceTree = "<group>";
+		};
 		144A91887502207582A3F36B /* InfoPlists */ = {
 			isa = PBXGroup;
 			children = (
@@ -130,6 +145,7 @@
 			children = (
 				2B2EBA04EC3B4AC31550C24C /* Project */,
 				3031F8ABC084F8D43CC56342 /* Products */,
+				12B9A666C278AB8CB5B6FA33 /* Packages */,
 			);
 			sourceTree = "<group>";
 		};
@@ -196,6 +212,10 @@
 			dependencies = (
 			);
 			name = Example;
+			packageProductDependencies = (
+				3CBCDDB6DBE4DF9B2D6BE89F /* Keys */,
+				B51AE7FEDFBF89B4AC23B2FC /* KeysInterfaces */,
+			);
 			productName = Example;
 			productReference = EC6AC6C8A834C815FC28BCCF /* Example.app */;
 			productType = "com.apple.product-type.application";
@@ -678,6 +698,17 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		3CBCDDB6DBE4DF9B2D6BE89F /* Keys */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Keys;
+		};
+		B51AE7FEDFBF89B4AC23B2FC /* KeysInterfaces */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = KeysInterfaces;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = CA8E1E974698BC95958F017F /* Project object */;
 }
