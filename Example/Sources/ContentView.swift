@@ -1,5 +1,6 @@
 import SwiftUI
 import DSKit
+import Keys
 
 struct ContentView: View {
     var body: some View {
@@ -9,6 +10,8 @@ struct ContentView: View {
                 .dsPadding()
                 .dsBackground(.primary)
 
+            DSText("Sentry DSN: \(Keys.Global().sentryDSN)")
+            
             DSButton(
                 title: "Automate",
                 action: { print("Do something") }
