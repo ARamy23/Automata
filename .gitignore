@@ -86,6 +86,4 @@ iOSInjectionProject/
 .env
 Packages/Keys/**/*
 Packages/KeysInterfaces/**/*
-Example/Example.xcodeproj/project.pbxproj
-
-Example.xcodeproj/project.pbxproj
+**.xcodeproj/**/*
