@@ -2,12 +2,18 @@ import ProjectDescription
 
 let project = Project(
     name: "Example",
+    settings: .settings(configurations: [
+        .debug(name: .debug, xcconfig: .relativeToRoot("Configurations/Debug.xcconfig")),
+        .debug(name: "Alpha", xcconfig: .relativeToRoot("Configurations/Alpha.xcconfig")),
+        .release(name: "Beta", xcconfig: .relativeToRoot("Configurations/Beta.xcconfig")),
+        .release(name: .release, xcconfig: .relativeToRoot("Configurations/Release.xcconfig"))
+    ]),
     targets: [
         .target(
             name: "Example",
             destinations: .iOS,
             product: .app,
-            bundleId: "io.tuist.Example",
+            bundleId: "com.yourcompany.Example",
             infoPlist: .extendingDefault(
                 with: [
                     "UILaunchScreen": [
@@ -21,16 +27,6 @@ let project = Project(
             dependencies: [
                 .external(name: "DSKit")
             ]
-        ),
-        .target(
-            name: "ExampleTests",
-            destinations: .iOS,
-            product: .unitTests,
-            bundleId: "io.tuist.ExampleTests",
-            infoPlist: .default,
-            sources: ["Example/Tests/**"],
-            resources: [],
-            dependencies: [.target(name: "Example")]
-        ),
+        )
     ]
 )
