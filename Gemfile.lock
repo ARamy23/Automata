@@ -218,7 +218,7 @@ PLATFORMS
 
 DEPENDENCIES
   arkana (= 2.0.0)
-  dotenv (~> 2.8.1)
+  dotenv (= 2.8.1)
   fastlane (= 2.224.0)
 
 RUBY VERSION
