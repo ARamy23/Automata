@@ -15,6 +15,17 @@ HOMEBREW_INIT_LINE = 'brew shellenv'
 RBENV_INIT_LINE = 'rbenv init'
 DIRENV_INIT_LINE = 'direnv hook'
 
+task default: [
+    :install_homebrew,
+    :install_rbenv,
+    :install_direnv,
+    :setup_secrets,
+    :install_mise,
+    :setup_tuist,
+    :verify,
+    :source_shell_profiles
+  ]
+
 desc "Install Homebrew and set up in .zprofile"
 task :onboard do
   Rake::Task['install_homebrew'].invoke
@@ -24,4 +35,5 @@ task :onboard do
   Rake::Task['install_mise'].invoke
   Rake::Task['setup_tuist'].invoke
   Rake::Task['verify'].invoke
+  Rake::Task['source_shell_profiles'].invoke
 end

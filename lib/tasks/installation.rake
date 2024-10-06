@@ -23,8 +23,6 @@ task :install_homebrew do
     puts "🍺 Homebrew init already in .zprofile, skipping..."
   end
 
-  Rake::Task['source_shell_profiles'].invoke
-
   puts "🔧 Running installing brew dependencies..."
   system "brew bundle install"
   puts "✅ Brew dependencies installed."
@@ -65,9 +63,7 @@ task :install_rbenv do
   end
 
   system("rbenv install 3.1.2")
-  system("rbenv global 3.1.2")
-  system("gem install bundler")
-  system("rbenv rehash")
+  system("rbenv local 3.1.2")
   system("bundle install")
 end
 
