@@ -31,7 +31,7 @@ let project = Project(
             dependencies: [
                 .external(name: "DSKit"),
                 .package(product: "Keys"),
-                .package(product: "KeysInterfaces")
+                .external(name: "KeysInterfaces")
             ]
         )
     ]

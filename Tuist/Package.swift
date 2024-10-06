@@ -11,8 +11,16 @@
         productTypes: [
             "dskit-swiftui": .framework,
             "Keys": .staticLibrary,
-            "KeysInterfaces": .staticLibrary
-        ]
+            "KeysInterfaces": .framework
+        ],
+        baseSettings: .settings(
+            configurations: [
+                .debug(name: .debug),
+                .debug(name: "Alpha"),
+                .release(name: "Beta"),
+                .release(name: .release)
+            ]
+        )
     )
 #endif
 
