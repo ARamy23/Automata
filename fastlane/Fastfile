@@ -13,12 +13,25 @@
 fastlane_require 'colored'
 fastlane_require 'yaml'
 fastlane_require 'json'
+fastlane_require 'dotenv'
 
-require_relative 'modules/onboarder'
+import './modules/onboarder.rb'
 
 # Uncomment the line if you want fastlane to automatically update itself
 default_platform(:ios)
 
 platform :ios do
-  OnboarderModule.onboarder
+  before_all do
+    setup_environment
+  end
+
+  desc "Sets up Environment Variables"
+  lane :setup_environment do
+    UI.header "Setting up Environment Variables..."
+
+    Dotenv.load "configs/.env.default.auth"
+    Dotenv.load "configs/.env.default.project"
+
+    UI.success "Environment Variables are set up successfully!"
+  end
 end

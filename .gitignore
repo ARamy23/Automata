@@ -73,6 +73,7 @@ fastlane/report.xml
 fastlane/Preview.html
 fastlane/screenshots/**/*.png
 fastlane/test_output
+fastlane/configs/.env.default.auth
 
 # Code Injection
 #
