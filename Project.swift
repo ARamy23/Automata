@@ -17,7 +17,7 @@ let project = Project(
             name: "Example",
             destinations: .iOS,
             product: .app,
-            bundleId: "com.yourcompany.Example",
+            bundleId: "com.automata.automata.example",
             infoPlist: .extendingDefault(
                 with: [
                     "UILaunchScreen": [
