@@ -10,12 +10,14 @@
 #     https://docs.fastlane.tools/plugins/available-plugins
 #
 
-fastlane_require 'colored'
-fastlane_require 'yaml'
-fastlane_require 'json'
-fastlane_require 'dotenv'
+require 'colored'
+require 'yaml'
+require 'json'
+require 'dotenv'
 
-import './modules/onboarder.rb'
+import('./modules/Onboard')
+import('./modules/Environment')
+import('./modules/Distribution')
 
 # Uncomment the line if you want fastlane to automatically update itself
 default_platform(:ios)
@@ -25,13 +27,17 @@ platform :ios do
     setup_environment
   end
 
-  desc "Sets up Environment Variables"
-  lane :setup_environment do
-    UI.header "Setting up Environment Variables..."
+  lane :distribute_to_testflight do |options|
+    configure_release_environment_variables(options: options)
+    prepare_build_for_distribution
+    upload_to_testflight
+    clean_build_artifacts
+  end
 
-    Dotenv.load "configs/.env.default.auth"
-    Dotenv.load "configs/.env.default.project"
-
-    UI.success "Environment Variables are set up successfully!"
+  lane :distribute_to_appstore do |options|
+    configure_release_environment_variables(options: options)
+    prepare_build_for_distribution
+    upload_to_app_store
+    clean_build_artifacts
   end
 end

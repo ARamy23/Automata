@@ -29,7 +29,7 @@ Onboard a new member to the project
 [bundle exec] fastlane ios create_service_account_access
 ```
 
-
+Creates Service Account Access for demo purposes
 
 ### ios setup_environment
 
@@ -38,6 +38,38 @@ Onboard a new member to the project
 ```
 
 Sets up Environment Variables
+
+### ios configure_release_environment_variables
+
+```sh
+[bundle exec] fastlane ios configure_release_environment_variables
+```
+
+
+
+### ios prepare_build_for_distribution
+
+```sh
+[bundle exec] fastlane ios prepare_build_for_distribution
+```
+
+
+
+### ios distribute_to_testflight
+
+```sh
+[bundle exec] fastlane ios distribute_to_testflight
+```
+
+
+
+### ios distribute_to_appstore
+
+```sh
+[bundle exec] fastlane ios distribute_to_appstore
+```
+
+
 
 ----
 
