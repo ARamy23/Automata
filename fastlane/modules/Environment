@@ -1,0 +1,33 @@
+require 'colored'
+require 'yaml'
+require 'json'
+require 'dotenv'
+
+platform :ios do
+  desc "Sets up Environment Variables"
+  lane :setup_environment do
+    UI.header "Setting up Environment Variables..."
+
+    Dotenv.load "configs/.env.default.auth"
+    Dotenv.load "configs/.env.default.project"
+
+    UI.success "Environment Variables are set up successfully!"
+  end
+
+  lane :configure_release_environment_variables do |options|
+    UI.message "Configuring release environment variables"
+    env = options[:env] || "ALPHA"
+    ENV['SELECTED_ENV'] = env.upcase
+
+    case ENV['SELECTED_ENV']
+    when "ALPHA"
+      ENV["SELECTED_BUNDLE_ID"] = "com.automata.automata.example.alpha"
+    when "BETA"
+      ENV["SELECTED_BUNDLE_ID"] = "com.automata.automata.example.beta"
+    when "RELEASE"
+      ENV["SELECTED_BUNDLE_ID"] = "com.automata.automata.example"
+    else
+      UI.user_error! "Whoops, looks like you picked a wrong environment this time, its ok, happens to the best of us, now re-run me again 😛"
+    end
+  end
+end

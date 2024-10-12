@@ -1,0 +1,26 @@
+require 'colored'
+require 'yaml'
+require 'json'
+require 'dotenv'
+
+platform :ios do
+  lane :prepare_build_for_distribution do 
+    sync_code_signing(
+      type: "appstore",
+      app_identifier: ENV['SELECTED_BUNDLE_ID']
+    )
+
+    build_app(
+      scheme: ENV['SCHEME'],
+      export_method: "app-store",
+      export_xcargs: "-allowProvisioningUpdates",
+      export_team_id: ENV["TEAM_ID"],
+      configuration: ENV['SELECTED_ENV'].capitalize,
+      export_options: {
+        provisioningProfiles: {
+          "#{ENV['SELECTED_BUNDLE_ID']}" => "match AppStore #{ENV['SELECTED_BUNDLE_ID']}",
+        }
+      }
+    )
+  end
+end
