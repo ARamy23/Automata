@@ -10,6 +10,8 @@ platform :ios do
 
     Dotenv.load "configs/.env.default.auth"
     Dotenv.load "configs/.env.default.project"
+    Dotenv.load "configs/.env.default.deliver"
+    Dotenv.load "configs/.env.default.metadata"
 
     UI.success "Environment Variables are set up successfully!"
   end

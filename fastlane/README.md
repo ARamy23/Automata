@@ -31,6 +31,14 @@ Onboard a new member to the project
 
 Creates Service Account Access for demo purposes
 
+### ios prepare_delivery_environment
+
+```sh
+[bundle exec] fastlane ios prepare_delivery_environment
+```
+
+Prepare deliver lanes environment for seamless delivery
+
 ### ios setup_environment
 
 ```sh
@@ -51,6 +59,14 @@ Sets up Environment Variables
 
 ```sh
 [bundle exec] fastlane ios prepare_build_for_distribution
+```
+
+
+
+### ios prepare_auth_for_match
+
+```sh
+[bundle exec] fastlane ios prepare_auth_for_match
 ```
 
 

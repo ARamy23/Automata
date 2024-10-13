@@ -1,0 +1,14 @@
+# Set app information and metadata
+support_url ENV['DELIVER_SUPPORT_URL']
+marketing_url ENV['DELIVER_MARKETING_URL']
+
+# App review information (already in place)
+app_review_information(
+  first_name: File.read('fastlane/metadata/review_information/first_name.txt').strip,
+  last_name: File.read('fastlane/metadata/review_information/last_name.txt').strip,
+  phone_number: File.read('fastlane/metadata/review_information/phone_number.txt').strip,
+  email_address: File.read('fastlane/metadata/review_information/email_address.txt').strip,
+  demo_user: File.read('fastlane/metadata/review_information/demo_user.txt').strip,
+  demo_password: File.read('fastlane/metadata/review_information/demo_password.txt').strip,
+  notes: File.read('fastlane/metadata/review_information/notes.txt').strip
+)

@@ -18,6 +18,7 @@ require 'dotenv'
 import('./modules/Onboard')
 import('./modules/Environment')
 import('./modules/Distribution')
+import('./modules/GitAuthenticator')
 
 # Uncomment the line if you want fastlane to automatically update itself
 default_platform(:ios)
