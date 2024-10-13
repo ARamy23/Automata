@@ -6,6 +6,11 @@ require 'dotenv'
 platform :ios do
   desc "Onboard a new member to the project"
   lane :onboard do
+    UI.header "Onboarding a new member to the project..."
+    UI.message "Setting up Git credentials of Service Account locally..."
+    prepare_auth_for_match
+
+    UI.message "Setting up Provisioning Profiles & Certificates..."
     match(type: "development", readonly: true)
     match(type: "appstore", readonly: true)
   end
@@ -15,4 +20,46 @@ platform :ios do
     match(type: "development")
     match(type: "appstore")
   end
+
+  desc "Prepare deliver lanes environment for seamless delivery"
+  lane :prepare_delivery_environment do
+    metadata_path = ENV['DELIVER_METADATA_PATH']
+    lang = "en"
+  
+    # Create directories
+    sh("mkdir -p #{metadata_path}/review_information #{metadata_path}/#{lang}")
+  
+    # Write files for review_information
+    File.write("#{metadata_path}/review_information/first_name.txt", ENV['DELIVER_FIRST_NAME'])
+    File.write("#{metadata_path}/review_information/last_name.txt", ENV['DELIVER_LAST_NAME'])
+    File.write("#{metadata_path}/review_information/phone_number.txt", ENV['DELIVER_PHONE_NUMBER'])
+    File.write("#{metadata_path}/review_information/email_address.txt", ENV['DELIVER_EMAIL_ADDRESS'])
+    File.write("#{metadata_path}/review_information/demo_user.txt", ENV['DELIVER_DEMO_USER'])
+    File.write("#{metadata_path}/review_information/demo_password.txt", ENV['DELIVER_DEMO_PASSWORD'])
+    File.write("#{metadata_path}/review_information/notes.txt", ENV['DELIVER_NOTES'])
+  
+    # Write files for metadata
+    File.write("#{metadata_path}/copyright.txt", ENV['DELIVER_COPYRIGHT'])
+    File.write("#{metadata_path}/primary_category.txt", ENV['DELIVER_PRIMARY_CATEGORY'])
+    File.write("#{metadata_path}/secondary_category.txt", ENV['DELIVER_SECONDARY_CATEGORY'])
+    File.write("#{metadata_path}/primary_first_sub_category.txt", ENV['DELIVER_PRIMARY_FIRST_SUB_CATEGORY'])
+    File.write("#{metadata_path}/primary_second_sub_category.txt", ENV['DELIVER_PRIMARY_SECOND_SUB_CATEGORY'])
+    File.write("#{metadata_path}/secondary_first_sub_category.txt", ENV['DELIVER_SECONDARY_FIRST_SUB_CATEGORY'])
+    File.write("#{metadata_path}/secondary_second_sub_category.txt", ENV['DELIVER_SECONDARY_SECOND_SUB_CATEGORY'])
+  
+    # Write files for app metadata
+    File.write("#{metadata_path}/#{lang}/name.txt", ENV['DELIVER_APP_NAME'])
+    File.write("#{metadata_path}/#{lang}/subtitle.txt", ENV['DELIVER_APP_SUBTITLE'])
+    File.write("#{metadata_path}/#{lang}/privacy_url.txt", ENV['DELIVER_PRIVACY_URL'])
+    File.write("#{metadata_path}/#{lang}/apple_tv_privacy_policy.txt", ENV['DELIVER_APPLE_TV_PRIVACY_POLICY'])
+    File.write("#{metadata_path}/#{lang}/description.txt", ENV['DELIVER_APP_DESCRIPTION'])
+    File.write("#{metadata_path}/#{lang}/keywords.txt", ENV['DELIVER_KEYWORDS'])
+    File.write("#{metadata_path}/#{lang}/release_notes.txt", ENV['DELIVER_RELEASE_NOTES'])
+    File.write("#{metadata_path}/#{lang}/support_url.txt", ENV['DELIVER_SUPPORT_URL'])
+    File.write("#{metadata_path}/#{lang}/marketing_url.txt", ENV['DELIVER_MARKETING_URL'])
+    File.write("#{metadata_path}/#{lang}/promotional_text.txt", ENV['DELIVER_PROMOTIONAL_TEXT'])
+  
+    UI.message("Delivery environment preparation complete.")
+  end
+  
 end

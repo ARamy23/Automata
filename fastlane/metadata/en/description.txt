@@ -1,0 +1,1 @@
+Example is an app designed to facilitate automation workshops, providing users with hands-on experience in automating tasks efficiently.
