@@ -32,13 +32,12 @@ let project = Project(
             dependencies: [
                 .external(name: "DSKit"),
                 .package(product: "Keys"),
-                .external(name: "KeysInterfaces")
+                .package(product: "KeysInterfaces")
             ],
             settings: .settings(
                 base: [
                     "DEVELOPMENT_TEAM": "969Y6REAB6",
                     "VERSIONING_SYSTEM": "apple-generic",
-                    "INFOPLIST_FILE": "CAFU/Core/Resources/Info.plist",
                     "TARGETED_DEVICE_FAMILY": "1",
                     "SWIFT_STRICT_CONCURRENCY": "complete",
                     "FRAMEWORK_SEARCH_PATHS": "$(inherited)",

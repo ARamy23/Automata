@@ -5,13 +5,6 @@
       location = "group:Example.xcodeproj">
    </FileRef>
    <Group
-      location = "group:Packages"
-      name = "Packages">
-      <FileRef
-         location = "group:KeysInterfaces/KeysInterfaces.xcodeproj">
-      </FileRef>
-   </Group>
-   <Group
       location = "container:"
       name = "Dependencies">
       <FileRef
