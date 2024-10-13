@@ -42,20 +42,6 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "828CAECDBFD30BA2D5138DBA"
-               BuildableName = "KeysInterfaces.framework"
-               BlueprintName = "KeysInterfaces"
-               ReferencedContainer = "container:Packages/KeysInterfaces/KeysInterfaces.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
                BlueprintIdentifier = "4522BA1E69969A14ADA602B2"
                BuildableName = "SDWebImage.framework"
                BlueprintName = "SDWebImage"
