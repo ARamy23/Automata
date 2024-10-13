@@ -1,0 +1,34 @@
+require 'colored'
+require 'yaml'
+require 'json'
+require 'dotenv'
+
+platform :ios do
+  lane :prepare_auth_for_match do
+    UI.header("Setting up Git credentials of Service Account locally...")
+
+    username = ENV["MATCH_GIT_USERNAME"]
+    password = ENV["MATCH_GIT_ACCESS_TOKEN"]
+    repo_url = ENV["MATCH_GIT_URL"]
+    host = ENV["MATCH_GIT_HOST"]
+    if username.nil? || password.nil? || repo_url.nil?
+      UI.user_error!("Environment variables MATCH_GIT_USERNAME, MATCH_GIT_ACCESS_TOKEN, or MATCH_REPO_URL are not set.")
+    end
+
+    # Check if username already exists in Keychain
+    existing_username = system("security find-generic-password -a #{username} -s '#{host}' -w")
+
+    if existing_username
+      UI.success("Git credentials for #{repo_url} already exist in Keychain. Skipping addition.")
+    else
+      # Save the Git username and password to Keychain under the service URL
+      UI.message("Storing Git credentials in macOS Keychain for #{repo_url}... under username #{username}")
+      system("security add-generic-password -a #{username} -s '#{host}' -w #{username}")
+      system("security add-generic-password -a #{username} -s '#{host}' -w #{password}")
+      UI.success("Git credentials successfully stored in macOS Keychain for #{repo_url}.")
+    end
+
+    # Configure Git to use Keychain helper for this repository
+    system("git config --local credential.helper osxkeychain")
+  end
+end
