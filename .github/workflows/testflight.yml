@@ -1,0 +1,40 @@
+name: Distribute to TestFlight
+
+on:
+  push:
+    branches:
+      - release
+jobs:
+  distribute:
+    runs-on: macos-13
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v3
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.1.2'  # Specify Ruby version based on your project's requirements
+          bundler-cache: true
+
+      - name: Install dependencies
+        run: |
+          brew bundle
+          bundle install
+
+      - name: Set up environment variables
+        run: |
+          echo "Setting up environment"
+          # Load any secrets or environment variables from your .env file or GitHub secrets
+          echo ${{ secrets.FASTLANE_ENV_AUTH_FILE }}" >> fastlane/configs/.env.default.auth
+          echo ${{ secrets.ARKANA_ENV_AUTH_FILE }}" >> .env
+        shell: bash
+      - name: Install Fastlane
+        run: |
+          bundle exec fastlane --version
+      - name: Generate Project
+        run: |
+          tuist install && tuist generate
+      - name: Distribute to TestFlight
+        run: |
+          bundle exec fastlane distribute_to_testflight
