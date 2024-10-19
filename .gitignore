@@ -86,4 +86,5 @@ iOSInjectionProject/
 .env
 Packages/Keys/**/*
 Packages/KeysInterfaces/**/*
-**.xcodeproj/**/*
+*.xcworkspace/**/*
+*.xcodeproj/**/*
