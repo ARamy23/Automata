@@ -8,6 +8,7 @@ platform :ios do
   lane :onboard do
     UI.header "Onboarding a new member to the project..."
     UI.message "Setting up Git credentials of Service Account locally..."
+    setup_environment
     prepare_auth_for_match
 
     UI.message "Setting up Provisioning Profiles & Certificates..."
