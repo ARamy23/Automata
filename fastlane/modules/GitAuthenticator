@@ -11,8 +11,8 @@ platform :ios do
     password = ENV["MATCH_GIT_ACCESS_TOKEN"]
     repo_url = ENV["MATCH_GIT_URL"]
     host = ENV["MATCH_GIT_HOST"]
-    if username.nil? || password.nil? || repo_url.nil?
-      UI.user_error!("Environment variables MATCH_GIT_USERNAME, MATCH_GIT_ACCESS_TOKEN, or MATCH_REPO_URL are not set.")
+    if username.nil? || password.nil? || repo_url.nil? || host.nil?
+      UI.user_error!("Environment variables MATCH_GIT_USERNAME, MATCH_GIT_ACCESS_TOKEN, MATCH_GIT_HOST, or MATCH_GIT_URL are not set.")
     end
 
     # Check if username already exists in Keychain
