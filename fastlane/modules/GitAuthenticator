@@ -8,27 +8,36 @@ platform :ios do
     UI.header("Setting up Git credentials of Service Account locally...")
 
     username = ENV["MATCH_GIT_USERNAME"]
-    password = ENV["MATCH_GIT_ACCESS_TOKEN"]
+    password = ENV["MATCH_GIT_AUTH_TOKEN"]
     repo_url = ENV["MATCH_GIT_URL"]
-    host = ENV["MATCH_GIT_HOST"]
-    if username.nil? || password.nil? || repo_url.nil? || host.nil?
-      UI.user_error!("Environment variables MATCH_GIT_USERNAME, MATCH_GIT_ACCESS_TOKEN, MATCH_GIT_HOST, or MATCH_GIT_URL are not set.")
+    
+    if username.nil? || password.nil? || repo_url.nil?
+      UI.user_error!("Environment variables MATCH_GIT_USERNAME, MATCH_GIT_AUTH_TOKEN, or MATCH_GIT_URL are not set.")
     end
 
-    # Check if username already exists in Keychain
-    existing_username = system("security find-generic-password -a #{username} -s '#{host}' -w")
+    # Check if credentials are already stored in Keychain
+    existing_username = %x[security find-generic-password -a #{username} -s '#{repo_url}' -w]
 
-    if existing_username
+    if !existing_username.empty?
       UI.success("Git credentials for #{repo_url} already exist in Keychain. Skipping addition.")
     else
-      # Save the Git username and password to Keychain under the service URL
+      # Store Git username and PAT in Keychain
       UI.message("Storing Git credentials in macOS Keychain for #{repo_url}... under username #{username}")
-      system("security add-generic-password -a #{username} -s '#{host}' -w #{username}")
-      system("security add-generic-password -a #{username} -s '#{host}' -w #{password}")
+      system("security add-generic-password -a #{username} -s '#{repo_url}' -w #{password}")
       UI.success("Git credentials successfully stored in macOS Keychain for #{repo_url}.")
     end
 
-    # Configure Git to use Keychain helper for this repository
+    # Configure Git to use Keychain for credentials
     system("git config --local credential.helper osxkeychain")
+
+    # Add or verify the Git remote for the Match repository
+    existing_remote = %x[git remote get-url match]
+    if existing_remote.empty?
+      UI.message("Configuring Git remote URL for Fastlane Match repository...")
+      system("git remote add match #{repo_url}")
+      UI.success("Git remote URL for Fastlane Match repository set to #{repo_url}.")
+    else
+      UI.success("Git remote 'match' already exists and points to #{existing_remote.strip}.")
+    end
   end
 end
