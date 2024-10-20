@@ -24,7 +24,6 @@ jobs:
       - name: Set up environment variables
         run: |
           echo "Setting up environment"
-          # Load any secrets or environment variables from your .env file or GitHub secrets
           echo ${{ secrets.FASTLANE_ENV_AUTH_FILE }}" >> fastlane/configs/.env.default.auth
           echo ${{ secrets.ARKANA_ENV_AUTH_FILE }}" >> .env
         shell: bash
