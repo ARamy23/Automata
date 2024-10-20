@@ -3,7 +3,7 @@ name: Distribute to TestFlight
 on:
   push:
     branches:
-      - release
+      - m04-github-actions
 jobs:
   distribute:
     runs-on: macos-13
@@ -20,7 +20,6 @@ jobs:
       - name: Install dependencies
         run: |
           brew bundle
-          bundle install
 
       - name: Set up environment variables
         run: |
@@ -29,12 +28,9 @@ jobs:
           echo ${{ secrets.FASTLANE_ENV_AUTH_FILE }}" >> fastlane/configs/.env.default.auth
           echo ${{ secrets.ARKANA_ENV_AUTH_FILE }}" >> .env
         shell: bash
-      - name: Install Fastlane
-        run: |
-          bundle exec fastlane --version
       - name: Generate Project
         run: |
-          tuist install && tuist generate
+          rake setup_tuist
       - name: Distribute to TestFlight
         run: |
           bundle exec fastlane distribute_to_testflight
