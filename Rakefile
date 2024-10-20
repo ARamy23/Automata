@@ -21,5 +21,7 @@ task :onboard do
   Rake::Task['install_rbenv'].invoke
   Rake::Task['install_direnv'].invoke
   Rake::Task['setup_secrets'].invoke
+  Rake::Task['install_mise'].invoke
+  Rake::Task['setup_tuist'].invoke
   Rake::Task['verify'].invoke
 end

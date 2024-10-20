@@ -59,6 +59,12 @@ task :check_rbenv do
   else
     puts "❌ rbenv is not installed."
   end
+
+  if system("rbenv versions | grep 3.1.2 > /dev/null")
+    puts "✅ Ruby 3.1.2 is installed."
+  else
+    puts "❌ Ruby 3.1.2 is not installed."
+  end
 end
 
 desc "Verify direnv installation and setup"
