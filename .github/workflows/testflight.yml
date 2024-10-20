@@ -23,14 +23,23 @@ jobs:
 
       - name: Set up environment variables
         run: |
-          echo "Setting up environment"
-          echo ${{ secrets.FASTLANE_ENV_AUTH_FILE }}" >> fastlane/configs/.env.default.auth
-          echo ${{ secrets.ARKANA_ENV_AUTH_FILE }}" >> .env
+          echo "Setting up environment variables"
+          # Write the FASTLANE_ENV_AUTH_FILE secret to .env.default.auth file
+          echo "${{ secrets.FASTLANE_ENV_AUTH_FILE }}" > fastlane/configs/.env.default.auth
+          
+          # Write the ARKANA_ENV_AUTH_FILE secret to .env file
+          echo "${{ secrets.ARKANA_ENV_AUTH_FILE }}" > .env
+
+          # print the files within fastlane/configs
+          echo "Checking files in fastlane/configs"
+          ls -a fastlane/configs
         shell: bash
       - name: Generate Project
         run: |
           rake setup_tuist
+      - name: Setup Fastlane
+        run: |
+          bundle exec fastlane onboard
       - name: Distribute to TestFlight
         run: |
-          bundle exec fastlane prepare_auth_for_match
           bundle exec fastlane distribute_to_testflight
