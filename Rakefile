@@ -32,6 +32,7 @@ task :ensure_files do
   puts "✅ Files checked."
 end
 
+## Homebrew
 desc "Install Homebrew and set up in .zprofile"
 task :install_homebrew do
   if system("command -v brew > /dev/null")
@@ -56,8 +57,13 @@ task :install_homebrew do
   else
     puts "🍺 Homebrew init already in .zprofile, skipping..."
   end
+
+## ADDED
+  puts "🔧 Running installing brew dependencies..."
+  system("brew bundle install")
 end
 
+# RBENV section
 desc "Install rbenv and set up in .zshenv and .zprofile"
 task :install_rbenv do
   if system("command -v rbenv > /dev/null")
@@ -93,6 +99,8 @@ task :install_rbenv do
   else
     puts "💎 rbenv init already in .zprofile, skipping..."
   end
+## ADDED
+  system("bundle")
 end
 
 desc "Install direnv and set up in .zprofile"
