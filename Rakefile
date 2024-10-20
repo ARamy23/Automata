@@ -56,6 +56,9 @@ task :install_homebrew do
   else
     puts "🍺 Homebrew init already in .zprofile, skipping..."
   end
+
+  puts "🔧 Running installing brew dependencies..."
+  system("brew bundle install")
 end
 
 desc "Install rbenv and set up in .zshenv and .zprofile"
@@ -93,7 +96,9 @@ task :install_rbenv do
   else
     puts "💎 rbenv init already in .zprofile, skipping..."
   end
+  system("bundle")
 end
+
 
 desc "Install direnv and set up in .zprofile"
 task :install_direnv do
