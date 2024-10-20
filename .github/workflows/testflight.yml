@@ -32,4 +32,5 @@ jobs:
           rake setup_tuist
       - name: Distribute to TestFlight
         run: |
+          bundle exec fastlane prepare_auth_for_match
           bundle exec fastlane distribute_to_testflight
