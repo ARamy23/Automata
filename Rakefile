@@ -12,8 +12,8 @@ HOMEBREW_INIT_LINE = 'brew shellenv'
 RBENV_INIT_LINE = 'rbenv init'
 DIRENV_INIT_LINE = 'direnv hook'
 
-desc "Onboards user by running the following tasks: ensure_files, install_homebrew, install_rbenv, install_direnv, source_files"
-task default: [:ensure_files, :install_homebrew, :install_rbenv, :install_direnv, :source_files]
+desc "Onboards user by running the following tasks: ensure_files, install_homebrew, install_rbenv, install_direnv, source_files, setup_secrets"
+task default: [:ensure_files, :install_homebrew, :install_rbenv, :install_direnv, :source_files, :setup_secrets]
 
 desc "Verify if environment setup is correct"
 task verify: [:check_files, :check_homebrew, :check_rbenv, :check_direnv]
@@ -93,6 +93,8 @@ task :install_rbenv do
   else
     puts "💎 rbenv init already in .zprofile, skipping..."
   end
+
+  system("bundle")
 end
 
 desc "Install direnv and set up in .zprofile"
@@ -202,4 +204,28 @@ task :check_direnv do
   else
     puts "❌ direnv is not installed."
   end
+end
+
+desc "Setup Secrets via Arkana"
+task :setup_secrets do
+  ## Check if .arkana.yml is there
+  if File.exist?('.arkana.yml') == false
+    puts "❌ .arkana.yml not found."
+    exit 1
+  end
+
+  ## Check if .env is there 
+  if File.exist?('.env') == false
+    # Duplicate .env.example to .env
+    FileUtils.cp('.env.example', '.env')
+    puts "✅ .env created."
+    puts "⚠️ Please update .env with your secrets."
+  else 
+    puts "✅ .env already exists."
+  end 
+
+  puts "🔧 Generating up secrets..."
+  system('bundle exec arkana')
+
+  puts "✅ Secrets setup."
 end

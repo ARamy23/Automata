@@ -1,0 +1,15 @@
+# In .arkana.yml
+import_name: 'Keys'
+namespace: 'Keys'
+result_path: 'Packages/'
+swift_declaration_strategy: let
+should_generate_unit_tests: true
+package_manager: spm
+environments:
+  - Debug
+  - Release
+global_secrets:
+  - newRelicAPIKey
+environment_secrets:
+  - applePayMerchantID
+  - googleMapsAPIKey
