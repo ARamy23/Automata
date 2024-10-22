@@ -86,3 +86,4 @@ iOSInjectionProject/
 Packages/Keys/**/*
 Packages/KeysInterfaces/**/*
 Example/Example.xcodeproj/project.pbxproj
+fastlane/.env.fastlane.auth

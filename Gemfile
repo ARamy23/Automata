@@ -5,4 +5,4 @@ source "https://rubygems.org"
 
 gem "dotenv", "~> 2.8.1"
 gem "arkana", "2.0.0"
-gem "fastlane", "2.224.0"
+gem "fastlane", "2.225.0"
