@@ -23,7 +23,8 @@ task default: [
     :install_mise,
     :setup_tuist,
     :verify,
-    :source_shell_profiles
+    :source_shell_profiles,
+    :fastlane_onboard
   ]
 
 desc "Install Homebrew and set up in .zprofile"

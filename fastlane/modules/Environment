@@ -1,0 +1,12 @@
+
+require 'dotenv'
+
+desc "Setup Fastlane's Environment Variables"
+lane :setup_env_vars do
+  UI.header 'Setting up Fastlane Environment Variables'
+  UI.message 'Loading Auth Env Variables'
+  Dotenv.load 'configs/.env.fastlane.auth'
+  
+  UI.success 'Successfully loaded Auth Env Variables'
+end 
+

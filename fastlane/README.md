@@ -13,6 +13,17 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 # Available Actions
 
+### setup_env_vars
+
+```sh
+[bundle exec] fastlane setup_env_vars
+```
+
+Setup Fastlane's Environment Variables
+
+----
+
+
 ## iOS
 
 ### ios onboard

@@ -114,6 +114,7 @@ GEM
       xcodeproj (>= 1.13.0, < 2.0.0)
       xcpretty (~> 0.3.0)
       xcpretty-travis-formatter (>= 0.0.3, < 2.0.0)
+    fastlane-plugin-appcenter (2.1.2)
     fastlane-sirp (1.0.0)
       sysrandom (~> 1.0)
     gh_inspector (1.1.3)
@@ -224,6 +225,7 @@ DEPENDENCIES
   arkana (= 2.0.0)
   dotenv (~> 2.8.1)
   fastlane (= 2.225.0)
+  fastlane-plugin-appcenter
 
 RUBY VERSION
    ruby 3.1.2p20

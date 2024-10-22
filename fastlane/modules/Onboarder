@@ -15,21 +15,9 @@
 
 default_platform(:ios)
 
-import('modules/Onboarder')
-import('modules/Environment')
-
 platform :ios do
-  before_all do
-    setup_env_vars
-  end 
-
   desc "Distribute a new version to TestFlight"
-  lane :distribute_to_testflight do
-    build_app(workspace: "Example.xcworkspace", scheme: "Example")
-    upload_to_testflight
-  end 
-
-  lane :distribute_to_appcenter do
-    appcenter_upload
+  lane :onboard do 
+    match(type: "development", readonly: true)
   end 
 end
