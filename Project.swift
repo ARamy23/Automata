@@ -8,7 +8,7 @@ let project = Project(
     ],
     settings: .settings(
         configurations: [
-            .debug(name: .debug),
+            .debug(name: .debug, xcconfig: .relativeToRoot("Configurations/Debug.xcconfig")),
             .debug(name: "Alpha"),
             .release(name: "Beta"),
             .release(name: .release)
