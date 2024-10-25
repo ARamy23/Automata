@@ -1,4 +1,4 @@
-// swift-tools-version: 6.0
+// swift-tools-version: 5.10
 @preconcurrency import PackageDescription
 
 #if TUIST
@@ -9,7 +9,9 @@
         // Default is .staticFramework
         // productTypes: ["Alamofire": .framework,] 
         productTypes: [
-            "dskit-swiftui": .framework
+            "dskit-swiftui": .framework,
+            "Keys": .framework,
+            "KeysInterfaces": .framework
         ],
         baseSettings: .settings(
             configurations: [
@@ -26,7 +28,7 @@ let package = Package(
     name: "Example",
     dependencies: [
         .package(url: "https://github.com/imodeveloperlab/dskit-swiftui", from: "1.0.5"),
-        .package(path: "../Packages/Keys"),
-        .package(path: "../Packages/KeysInterfaces")
+        .package(path: Path.relativeToRoot("Packages/Keys").pathString),
+        .package(path: Path.relativeToRoot("Packages/KeysInterfaces").pathString)
     ]
 )

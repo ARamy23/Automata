@@ -15,13 +15,14 @@ require 'yaml'
 require 'json'
 require 'dotenv'
 
-import('./modules/Onboard')
-import('./modules/Environment')
-import('./modules/Distribution')
-import('./modules/GitAuthenticator')
-
 # Uncomment the line if you want fastlane to automatically update itself
+Dir.glob('modules/*').each { |r| 
+  UI.important("Importing Fastfile from #{r}")
+  import r 
+}
+
 default_platform(:ios)
+
 
 platform :ios do
   before_all do
@@ -29,14 +30,14 @@ platform :ios do
   end
 
   lane :distribute_to_testflight do |options|
-    configure_release_environment_variables(options: options)
+    configure_release_environment_variables(options)
     prepare_build_for_distribution
     upload_to_testflight
     clean_build_artifacts
   end
 
   lane :distribute_to_appstore do |options|
-    configure_release_environment_variables(options: options)
+    configure_release_environment_variables(options)
     prepare_build_for_distribution
     upload_to_app_store
     clean_build_artifacts

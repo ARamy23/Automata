@@ -15,6 +15,38 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 ## iOS
 
+### ios prepare_build_for_distribution
+
+```sh
+[bundle exec] fastlane ios prepare_build_for_distribution
+```
+
+
+
+### ios setup_environment
+
+```sh
+[bundle exec] fastlane ios setup_environment
+```
+
+Sets up Environment Variables
+
+### ios configure_release_environment_variables
+
+```sh
+[bundle exec] fastlane ios configure_release_environment_variables
+```
+
+
+
+### ios prepare_auth_for_match
+
+```sh
+[bundle exec] fastlane ios prepare_auth_for_match
+```
+
+
+
 ### ios onboard
 
 ```sh
@@ -39,34 +71,10 @@ Creates Service Account Access for demo purposes
 
 Prepare deliver lanes environment for seamless delivery
 
-### ios setup_environment
+### ios increment_build_number
 
 ```sh
-[bundle exec] fastlane ios setup_environment
-```
-
-Sets up Environment Variables
-
-### ios configure_release_environment_variables
-
-```sh
-[bundle exec] fastlane ios configure_release_environment_variables
-```
-
-
-
-### ios prepare_build_for_distribution
-
-```sh
-[bundle exec] fastlane ios prepare_build_for_distribution
-```
-
-
-
-### ios prepare_auth_for_match
-
-```sh
-[bundle exec] fastlane ios prepare_auth_for_match
+[bundle exec] fastlane ios increment_build_number
 ```
 
 

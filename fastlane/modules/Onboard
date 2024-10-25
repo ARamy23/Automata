@@ -8,8 +8,6 @@ platform :ios do
   lane :onboard do
     UI.header "Onboarding a new member to the project..."
     UI.message "Setting up Git credentials of Service Account locally..."
-    prepare_auth_for_match
-
     UI.message "Setting up Provisioning Profiles & Certificates..."
     match(type: "development", readonly: true)
     match(type: "appstore", readonly: true)

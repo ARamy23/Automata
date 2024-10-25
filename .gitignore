@@ -88,3 +88,4 @@ Packages/Keys/**/*
 Packages/KeysInterfaces/**/*
 *.xcworkspace/**/*
 *.xcodeproj/**/*
+fastlane/.env.fastlane.auth

@@ -18,7 +18,7 @@ platform :ios do
 
   lane :configure_release_environment_variables do |options|
     UI.message "Configuring release environment variables"
-    env = options[:env] || "ALPHA"
+    env = options[:env].to_s
     ENV['SELECTED_ENV'] = env.upcase
 
     case ENV['SELECTED_ENV']
