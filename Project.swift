@@ -21,6 +21,8 @@ let project = Project(
             bundleId: "com.automata.automata.example",
             infoPlist: .extendingDefault(
                 with: [
+                    "CFBundleShortVersionString": "1.0.1",
+                    "CFBundleVersion": "1",
                     "UILaunchScreen": [
                         "UIColorName": "",
                         "UIImageName": "",
