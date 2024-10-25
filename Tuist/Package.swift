@@ -1,4 +1,5 @@
-// swift-tools-version: 6.0
+// swift-tools-version: 5.10
+
 @preconcurrency import PackageDescription
 
 #if TUIST

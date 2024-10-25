@@ -1,0 +1,8 @@
+app_identifier(
+  [
+    "com.automata.automata.example.debug",
+    "com.automata.automata.example.alpha",
+    "com.automata.automata.example.beta",
+    "com.automata.automata.example",
+  ]
+)
