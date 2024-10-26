@@ -10,8 +10,8 @@
         // productTypes: ["Alamofire": .framework,] 
         productTypes: [
             "dskit-swiftui": .framework,
-            "Keys": .framework,
-            "KeysInterfaces": .framework
+            "Keys": .staticFramework,
+            "KeysInterfaces": .staticFramework
         ],
         baseSettings: .settings(
             configurations: [
