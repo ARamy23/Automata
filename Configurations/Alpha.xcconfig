@@ -8,5 +8,5 @@ OTHER_SWIFT_FLAGS = $(inherited) -D ALPHA
 PRODUCT_BUNDLE_IDENTIFIER = com.automata.automata.example.alpha
 CODE_SIGN_ENTITLEMENTS = Entitlements/Alpha.entitlements
 CODE_SIGN_STYLE = Manual
-CODE_SIGN_IDENTITY = 
-PROVISIONING_PROFILE_SPECIFIER = 
+CODE_SIGN_IDENTITY = Apple Distribution: Ahmed Ramy (969Y6REAB6)
+PROVISIONING_PROFILE_SPECIFIER = match Development com.automata.automata.example.alpha

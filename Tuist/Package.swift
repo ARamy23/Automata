@@ -28,7 +28,7 @@ let package = Package(
     name: "Example",
     dependencies: [
         .package(url: "https://github.com/imodeveloperlab/dskit-swiftui", from: "1.0.5"),
-        .package(path: Path.relativeToRoot("Packages/Keys").pathString),
-        .package(path: Path.relativeToRoot("Packages/KeysInterfaces").pathString)
+        .package(path: "../Packages/Keys"),
+        .package(path: "../Packages/KeysInterfaces")
     ]
 )

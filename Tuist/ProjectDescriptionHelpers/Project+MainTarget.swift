@@ -19,6 +19,104 @@ public extension Target {
         ],
         scripts: .mainAppScripts,
         dependencies: .mainAppDependencies,
-        settings: .mainAppSettings
+        settings: .settings(
+            base: [
+                "DEVELOPMENT_TEAM": "969Y6REAB6",
+                "VERSIONING_SYSTEM": "apple-generic",
+                "TARGETED_DEVICE_FAMILY": "1",
+                "SWIFT_STRICT_CONCURRENCY": "complete",
+                "FRAMEWORK_SEARCH_PATHS": "$(inherited)",
+                "STRIP_STYLE": "all",
+                "COPY_PHASE_STRIP": "false"
+            ],
+            configurations: [
+                .debug(
+                    name: .debug,
+                    settings: .debug,
+                    xcconfig: .relativeToRoot("Configurations/Debug.xcconfig")
+                ),
+                .debug(
+                    name: "Alpha",
+                    settings: .alpha,
+                    xcconfig: .relativeToRoot("Configurations/Alpha.xcconfig")
+
+                ),
+                .release(
+                    name: "Beta",
+                    settings: .beta,
+                    xcconfig: .relativeToRoot("Configurations/Beta.xcconfig")
+                ),
+                .release(
+                    name: .release,
+                    settings: .release,
+                    xcconfig: .relativeToRoot("Configurations/Release.xcconfig")
+                )
+            ]
+        )
     )
+}
+
+extension SettingsDictionary {
+    static let debug: SettingsDictionary = [
+        "APP_ICON": .string("AppIcon-debug"),
+        "APP_DISPLAY_NAME": .string("Ex-debug"),
+        "BUNDLE_DISPLAY_NAME": .string("Ex-debug"),
+        "SWIFT_ACTIVE_COMPILATION_CONDITIONS": .string("DEBUG"),
+        "OTHER_LDFLAGS": "-Xlinker -interposable -ObjC",
+        "GCC_PREPROCESSOR_DEFINITIONS": .string("$(inherited) DEBUG=1"),
+        "ASSETCATALOG_COMPILER_APPICON_NAME": .string("AppIcon-debug"),
+        "OTHER_SWIFT_FLAGS": .string("$(inherited) -D DEBUG"),
+        "PRODUCT_BUNDLE_IDENTIFIER": .string("com.automata.automata.example.debug"),
+        "CODE_SIGN_ENTITLEMENTS": .string("Entitlements/Debug.entitlements"),
+        "CODE_SIGN_STYLE": .string("Manual"),
+        "CODE_SIGN_IDENTITY": .string("Apple Development: Ahmed Ramy (NNFXLM5TC2)"),
+        "PROVISIONING_PROFILE_SPECIFIER": "match Development com.automata.automata.example.debug"
+    ]
+    
+    static let alpha: SettingsDictionary = [
+        "APP_ICON": .string("AppIcon-alpha"),
+        "APP_DISPLAY_NAME": .string("Ex-Alpha"),
+        "BUNDLE_DISPLAY_NAME": .string("Ex-Alpha"),
+        "SWIFT_ACTIVE_COMPILATION_CONDITIONS": .string("ALPHA"),
+        "GCC_PREPROCESSOR_DEFINITIONS": .string("$(inherited) ALPHA=1"),
+        "ASSETCATALOG_COMPILER_APPICON_NAME": .string("AppIcon-alpha"),
+        "OTHER_SWIFT_FLAGS": .string("$(inherited) -D ALPHA"),
+        "PRODUCT_BUNDLE_IDENTIFIER": .string("com.automata.automata.example.alpha"),
+        "CODE_SIGN_ENTITLEMENTS": .string("Entitlements/Alpha.entitlements"),
+        "CODE_SIGN_STYLE": .string("Manual"),
+        "CODE_SIGN_IDENTITY": .string("Apple Development: Ahmed Ramy (NNFXLM5TC2)"),
+        "PROVISIONING_PROFILE_SPECIFIER": "match Development com.automata.automata.example.alpha",
+        "CURRENT_PROJECT_VERSION": "1",
+        "MARKETING_VERSION": "1.0.1"
+    ]
+    
+    static let beta: SettingsDictionary = [
+        "APP_ICON": .string("AppIcon-beta"),
+        "APP_DISPLAY_NAME": .string("Ex-beta"),
+        "BUNDLE_DISPLAY_NAME": .string("Ex-beta"),
+        "SWIFT_ACTIVE_COMPILATION_CONDITIONS": .string("BETA"),
+        "GCC_PREPROCESSOR_DEFINITIONS": .string("$(inherited) BETA=1"),
+        "ASSETCATALOG_COMPILER_APPICON_NAME": .string("AppIcon-beta"),
+        "OTHER_SWIFT_FLAGS": .string("$(inherited) -D BETA"),
+        "PRODUCT_BUNDLE_IDENTIFIER": .string("com.automata.automata.example.beta"),
+        "CODE_SIGN_ENTITLEMENTS": .string("Entitlements/Beta.entitlements"),
+        "CODE_SIGN_STYLE": .string("Manual"),
+        "CODE_SIGN_IDENTITY": .string("Apple Development: Ahmed Ramy (NNFXLM5TC2)"),
+        "PROVISIONING_PROFILE_SPECIFIER": "match Development com.automata.automata.example.beta"
+    ]
+    
+    static let release: SettingsDictionary = [
+        "APP_ICON": .string("AppIcon"),
+        "ASSETCATALOG_COMPILER_APPICON_NAME": .string("AppIcon"),
+        "APP_DISPLAY_NAME": .string("Example"),
+        "BUNDLE_DISPLAY_NAME": .string("Example"),
+        "SWIFT_ACTIVE_COMPILATION_CONDITIONS": .string("RELEASE"),
+        "PRODUCT_BUNDLE_IDENTIFIER": .string("m.automata.automata.example"),
+        "OTHER_LDFLAGS": .string("-ObjC"),
+        "STRIP_STYLE": .string("debugging"),
+        "CODE_SIGN_STYLE": .string("Manual"),
+        "CODE_SIGN_IDENTITY": .string("Apple Development: Ahmed Ramy (NNFXLM5TC2)"),
+        "CODE_SIGN_ENTITLEMENTS": .string("Entitlements/Release.entitlements"),
+        "PROVISIONING_PROFILE_SPECIFIER": "match Development com.automata.automata.example"
+    ]
 }

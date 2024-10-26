@@ -5,13 +5,13 @@ public extension Settings {
         base: [
             "MARKETING_VERSION": .string(ProjectConfigs.version),
             "CURRENT_PROJECT_VERSION": .string(ProjectConfigs.buildNumber),
-            "VERSIONING_SYSTEM": .string("apple-generic"),
-            "DEVELOPMENT_TEAM": .string("793K46RDR4"),
-            "TARGETED_DEVICE_FAMILY": .string("1"),
-            "SWIFT_STRICT_CONCURRENCY": .string("complete"),
-            "FRAMEWORK_SEARCH_PATHS": .string("$(inherited)"),
-            "STRIP_STYLE": .string("all"),
-            "COPY_PHASE_STRIP": .string("false"),
+            "VERSIONING_SYSTEM": "apple-generic",
+            "DEVELOPMENT_TEAM": "969Y6REAB6",
+            "TARGETED_DEVICE_FAMILY": "1",
+            "SWIFT_STRICT_CONCURRENCY": "complete",
+            "FRAMEWORK_SEARCH_PATHS": "$(inherited)",
+            "STRIP_STYLE": "all",
+            "COPY_PHASE_STRIP": "false",
         ],
         configurations: [
             .debug(
