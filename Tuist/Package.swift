@@ -9,7 +9,9 @@
         // Default is .staticFramework
         // productTypes: ["Alamofire": .framework,] 
         productTypes: [
-            "dskit-swiftui": .framework,
+            "dskit-swiftui": .staticFramework,
+            "SDWebImage": .staticFramework,
+            "SDWebImage-SwiftUI": .staticFramework,
             "Keys": .staticFramework,
             "KeysInterfaces": .staticFramework
         ],
