@@ -223,7 +223,6 @@ PLATFORMS
 
 DEPENDENCIES
   arkana (= 2.0.0)
-  dotenv (~> 2.8.1)
   fastlane (= 2.225.0)
   fastlane-plugin-appcenter
 
@@ -231,4 +230,4 @@ RUBY VERSION
    ruby 3.1.2p20
 
 BUNDLED WITH
-   2.3.7
+   2.5.22
