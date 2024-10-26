@@ -1,3 +1,5 @@
+
+# In Rakefile
 # Rakefile
 require 'rake'
 require 'fileutils'
@@ -23,7 +25,8 @@ task default: [
     :install_mise,
     :setup_tuist,
     :verify,
-    :source_shell_profiles
+    :source_shell_profiles,
+    :onboard_fastlane
   ]
 
 desc "Install Homebrew and set up in .zprofile"
@@ -36,4 +39,5 @@ task :onboard do
   Rake::Task['setup_tuist'].invoke
   Rake::Task['verify'].invoke
   Rake::Task['source_shell_profiles'].invoke
+  Rake::Task['onboard_fastlane'].invoke
 end
