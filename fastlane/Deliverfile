@@ -1,7 +1,3 @@
-# Set app information and metadata
-support_url ENV['DELIVER_SUPPORT_URL']
-marketing_url ENV['DELIVER_MARKETING_URL']
-
 # App review information (already in place)
 app_review_information(
   first_name: File.read('fastlane/metadata/review_information/first_name.txt').strip,
