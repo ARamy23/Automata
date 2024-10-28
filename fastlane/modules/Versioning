@@ -55,5 +55,8 @@ platform :ios do
       push_to_git_remote
     end 
     UI.success "Successfully incremented the build number to #{build_number}"
+
+    UI.message "🚀 Re-running tuist generate to have versions reflect before distribution"
+    sh('tuist generate -p ..')
   end
 end
