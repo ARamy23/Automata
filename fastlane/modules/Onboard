@@ -22,7 +22,7 @@ platform :ios do
   desc "Prepare deliver lanes environment for seamless delivery"
   lane :prepare_delivery_environment do
     metadata_path = ENV['DELIVER_METADATA_PATH']
-    lang = "en"
+    lang = "en-US"
   
     # Create directories
     sh("mkdir -p #{metadata_path}/review_information #{metadata_path}/#{lang}")
