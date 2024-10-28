@@ -1,0 +1,37 @@
+name: Distribute to TestFlight
+
+on:
+  push:
+    branches:
+      - ramy/m03-10-versioning
+
+jobs:
+  distribute:
+    runs-on: macos-13
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v3
+
+# MARK: - Setup Environment
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.1.2'
+          bundler-cache: true
+      - name: Setup Homebrew Dependencies
+        run: |
+          brew bundle
+      - name: Install mise
+        uses: jdx/mise-action@v2
+        with:
+          version: 2024.8.15
+          install: false
+          cache: true
+
+# MARK: - Distribution
+      - name: Set up environment variables
+        run: |
+          echo "${{ secrets.FASTLANE_ENV_AUTH_FILE }}" > fastlane/configs/default/.env.default.auth
+          echo "${{ secrets.ARKANA_ENV_AUTH_FILE }}" > .env
+
+          
