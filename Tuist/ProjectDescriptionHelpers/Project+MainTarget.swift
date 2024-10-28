@@ -85,9 +85,7 @@ extension SettingsDictionary {
         "CODE_SIGN_ENTITLEMENTS": .string("Entitlements/Alpha.entitlements"),
         "CODE_SIGN_STYLE": .string("Manual"),
         "CODE_SIGN_IDENTITY": .string("Apple Development: Ahmed Ramy (NNFXLM5TC2)"),
-        "PROVISIONING_PROFILE_SPECIFIER": "match Development com.automata.automata.example.alpha",
-        "CURRENT_PROJECT_VERSION": "1",
-        "MARKETING_VERSION": "1.0.1"
+        "PROVISIONING_PROFILE_SPECIFIER": "match Development com.automata.automata.example.alpha"
     ]
     
     static let beta: SettingsDictionary = [
