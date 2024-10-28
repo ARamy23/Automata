@@ -1,0 +1,42 @@
+name: Build & Test Check
+
+on:
+  push:
+    branches:
+      - m04-03-ci
+
+jobs:
+  distribute:
+    runs-on: macos-13
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v3
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.1.2'
+          bundler-cache: true
+
+      - name: Set up environment variables
+        run: |
+          echo "${{ secrets.FASTLANE_ENV_AUTH_FILE }}" > fastlane/configs/default/.env.default.auth
+          echo "${{ secrets.ARKANA_ENV_AUTH_FILE }}" > .env
+        shell: bash
+
+      - uses: jdx/mise-action@v2
+        with:
+          version: 2024.8.15 # [default: latest] mise version to install
+          install: false # [default: true] run `mise install`
+          cache: true # [default: true] cache mise using GitHub's cache
+      - name: Generate Project
+        run: |
+          bundle exec fastlane generate_project
+
+      - name: Build Check
+        run: |
+          tuist build
+      
+      - name: Run Tests
+        run: |
+            tuist test
