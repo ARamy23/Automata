@@ -27,9 +27,11 @@ jobs:
           version: 2024.8.15
           install: false
           cache: true
-
 # MARK: - Distribution
       - name: Set up environment variables
         run: |
           echo "${{ secrets.FASTLANE_ENV_AUTH_FILE }}" > fastlane/configs/default/.env.default.auth
           echo "${{ secrets.ARKANA_ENV_AUTH_FILE }}" > .env
+      - name: Test Configuration
+        run: |
+          echo "IT'S ALIIIIVE!"
