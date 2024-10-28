@@ -3,7 +3,7 @@ name: Distribute to TestFlight
 on:
   push:
     branches:
-      - ramy/m03-10-versioning
+      - elgendy/m03-10-versioning
 
 jobs:
   distribute:
@@ -27,4 +27,10 @@ jobs:
           version: 2024.8.15
           install: false
           cache: true
-          
+      - name: Set up environment variables
+        run: |
+          echo "${{ secrets.FASTLANE_ENV_AUTH_FILE }}" > fastlane/configs/default/.env.default.auth
+          echo "${{ secrets.ARKANA_ENV_AUTH_FILE }}" > .env
+      - name: Test Configuration
+        run: |
+          echo "IT'S ALIIIIVE!"
