@@ -1,5 +1,5 @@
 // swift-tools-version: 5.9
-import PackageDescription
+@preconcurrency import PackageDescription
 
 #if TUIST
     import ProjectDescription
@@ -10,6 +10,8 @@ import PackageDescription
         // productTypes: ["Alamofire": .framework,] 
         productTypes: [
             "dskit-swiftui": .framework,
+            "SDWebImage": .framework,
+            "SDWebImage-SwiftUI": .framework,
             "Keys": .framework,
             "KeysInterfaces": .framework
         ],
