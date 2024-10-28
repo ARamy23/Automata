@@ -89,3 +89,4 @@ Packages/KeysInterfaces/**/*
 *.xcworkspace/**/*
 *.xcodeproj/**/*
 fastlane/.env.fastlane.auth
+Tuist/Package.resolved
