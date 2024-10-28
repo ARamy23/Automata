@@ -32,6 +32,7 @@ jobs:
       - name: Generate Project
         run: |
           bundle exec fastlane generate_project
+          tuist generate
 
       - name: Build Check
         run: |
