@@ -4,6 +4,14 @@ on:
   push:
     branches:
       - elgendy/m03-10-versioning
+  workflow_dispatch:
+    inputs:
+      name:
+        type: choice
+        description: Environment
+        options: 
+        - ALPHA
+        - BETA
 
 jobs:
   distribute:
