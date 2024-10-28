@@ -219,7 +219,7 @@ GEM
     yaml (0.3.0)
 
 PLATFORMS
-  arm64-darwin-23
+  add-platform x86_64-darwin-19
 
 DEPENDENCIES
   arkana (= 2.0.0)
