@@ -1,5 +1,4 @@
 {
-  "originHash" : "00fc6c6e826d6a56c7aa5a33ef93a26e84033e751fe04191744c8cb235e0f48e",
   "pins" : [
     {
       "identity" : "dskit-swiftui",
@@ -29,5 +28,5 @@
       }
     }
   ],
-  "version" : 3
+  "version" : 2
 }
