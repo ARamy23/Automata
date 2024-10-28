@@ -5,13 +5,16 @@ on:
     branches:
       - elgendy/m03-10-versioning
   workflow_dispatch:
-    inputs:
-      name:
+    inputs: 
+      environment: 
+        required: true
+        default: 'Stop'
+        description: Please select the action
         type: choice
-        description: Environment
-        options: 
-        - ALPHA
-        - BETA
+        options:
+        - stop
+        - start
+    
 
 jobs:
   distribute:
@@ -43,10 +46,10 @@ jobs:
         run: |
           echo "IT'S ALIIIIVE!"
 
-      - name: Generate Project
-        run: |
-          bundle exec fastlane generate_project
-          tuist generate
-      - name: Upload to Testflight
-        run: |
-          bundle exec fastlane distribute_to_testflight env:ALPHA
+      # - name: Generate Project
+      #   run: |
+      #     bundle exec fastlane generate_project
+      #     tuist generate
+      # - name: Upload to Testflight
+      #   run: |
+      #     bundle exec fastlane distribute_to_testflight env:ALPHA
