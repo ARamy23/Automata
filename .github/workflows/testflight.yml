@@ -32,12 +32,12 @@ jobs:
         run: |
           echo "${{ secrets.FASTLANE_ENV_AUTH_FILE }}" > fastlane/configs/default/.env.default.auth
           echo "${{ secrets.ARKANA_ENV_AUTH_FILE }}" > .env
-
-## ADDED ----
-      - name: Generate Project
-        run: |
-          bundle exec fastlane generate_project
-          tuist generate
+      
+      # - name: Generate Project
+      #   run: |
+      #     bundle exec fastlane generate_project
+      #     tuist generate
+      
       - name: Upload to Testflight
         run: |
           bundle exec fastlane distribute_to_testflight env:ALPHA
