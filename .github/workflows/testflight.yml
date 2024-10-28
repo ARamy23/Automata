@@ -3,7 +3,7 @@ name: Distribute to TestFlight
 on:
   push:
     branches:
-      - ramy/m03-10-versioning
+      - nadawoud/m03-10-versioning
 
 jobs:
   distribute:
