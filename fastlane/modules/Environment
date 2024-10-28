@@ -6,7 +6,7 @@ require 'dotenv'
 platform :ios do
   desc "Sets up Environment Variables"
   lane :setup_environment do
-    if ENV['CI'] == true
+    if ENV['CI']
       UI.message "🚀 Running on CI Env Detected"
       Dotenv.load "configs/ci/.env.default.ci.settings"
       setup_ci
