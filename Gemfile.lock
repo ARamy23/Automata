@@ -220,10 +220,10 @@ GEM
 
 PLATFORMS
   arm64-darwin-23
+  x86_64-darwin-19
 
 DEPENDENCIES
   arkana (= 2.0.0)
-  dotenv (~> 2.8.1)
   fastlane (= 2.225.0)
   fastlane-plugin-appcenter
 
