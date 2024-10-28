@@ -3,7 +3,7 @@ name: Distribute to TestFlight
 on:
   push:
     branches:
-      - ramy/m03-10-versioning
+      - asmaa/m03-10-versioning
 
 jobs:
   distribute:
@@ -34,4 +34,3 @@ jobs:
           echo "${{ secrets.FASTLANE_ENV_AUTH_FILE }}" > fastlane/configs/default/.env.default.auth
           echo "${{ secrets.ARKANA_ENV_AUTH_FILE }}" > .env
 
-          
