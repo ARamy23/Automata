@@ -32,7 +32,7 @@ jobs:
 
       - name: Setup Certs and Profiles on CI
         run: |
-          bundle exec fastlane prepare_ci_certs_profiles
+          bundle exec fastlane ci_import_certs_profiles_locally
 
       - name: Generate Project
         run: |
