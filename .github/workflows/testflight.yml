@@ -35,10 +35,10 @@ jobs:
         run: |
           echo "IT'S ALIIIIVE!"
 
-      - name: Generate Project
-        run: |
-          bundle exec fastlane generate_project
-          tuist generate
+      # - name: Generate Project
+      #   run: |
+      #     bundle exec fastlane generate_project
+      #     tuist generate
       - name: Upload to Testflight
         run: |
           bundle exec fastlane distribute_to_testflight env:ALPHA
