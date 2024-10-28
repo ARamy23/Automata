@@ -16,7 +16,6 @@ platform :ios do
       UI.message "🔑 Setting up CI Certs & Profiles..."
 
       setup_ci
-      generate_project
     else 
       UI.message "🚀 CI environment not detected. Setting up default environment variables..."
     end
