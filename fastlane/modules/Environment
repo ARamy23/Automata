@@ -20,6 +20,12 @@ platform :ios do
     Dotenv.load "configs/default/.env.default.metadata"
 
     UI.success "Environment Variables are set up successfully!"
+
+# ADDED ---
+    if ENV['CI']
+      onboard
+    end
+### 
   end
 
   lane :configure_release_environment_variables do |options|
