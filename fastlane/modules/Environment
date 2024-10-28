@@ -122,37 +122,46 @@ platform :ios do
   desc "Setup Apple certificate and provisioning profile for CI/CD"
   lane :ci_import_certs_profiles_locally do
       # Load environment variables from .env file if needed
+      Dotenv.load "configs/ci/.env.default.ci.match"
+      # Load repository URL and encryption password from environment variables
+      match_repo_url = ENV["MATCH_GIT_URL"]
+      match_repo_path = "./match_repo"  # Temporary directory to clone the match repo
+
+      # Clone the match repository
+      sh("git clone #{match_repo_url} #{match_repo_path}")
 
       # Define paths for the temporary certificate, provisioning profile, and keychain
-      certificate_path = "#{Dir.tmpdir}/build_certificate.p12"
-      provisioning_profile_path = "#{Dir.tmpdir}/build_pp.mobileprovision"
-      keychain_path = "#{Dir.tmpdir}/app-signing.keychain-db"
+      certificate_path_folder = "#{match_repo_path}/certs/distribution"
 
-      UI.message ENV["BUILD_CERTIFICATE_BASE64"]
-      UI.message ENV["BUILD_PROVISION_PROFILE_BASE64"]
-      UI.message ENV["KEYCHAIN_PASSWORD"]
-      UI.message ENV["P12_PASSWORD"]
+      sh("ls #{certificate_path_folder}")
+      sh("ls #{match_repo_path}/profiles/appstore")
+      # first file within certificate_path_folder which ends with .p12
+      certificate_path = "#{certificate_path_folder}/C8Y6T24ZH3.p12"
+      # first file within provisioning_profile_path_folder which matches the selected bundle id
+      provisioning_profile_path = "#{match_repo_path}/profiles/appstore/AppStore_#{ENV['SELECTED_BUNDLE_ID']}.mobileprovision"
 
-      # Decode the Base64 certificate and provisioning profile
-      # File.open(certificate_path, "wb") { |f| f.write(Base64.decode64(ENV["BUILD_CERTIFICATE_BASE64"])) }
-      # File.open(provisioning_profile_path, "wb") { |f| f.write(Base64.decode64(ENV["BUILD_PROVISION_PROFILE_BASE64"])) }
+      # Create and configure a temporary keychain
+      keychain_password = ENV["KEYCHAIN_PASSWORD"]
+      p12_password = ENV["P12_PASSWORD"]
 
-      # # Create and configure a temporary keychain
-      # keychain_password = ENV["KEYCHAIN_PASSWORD"]
-      # p12_password = ENV["P12_PASSWORD"]
 
-      # sh("security create-keychain -p #{keychain_password} #{keychain_path}")
-      # sh("security set-keychain-settings -lut 21600 #{keychain_path}")
-      # sh("security unlock-keychain -p #{keychain_password} #{keychain_path}")
-      # sh("security import #{certificate_path} -P #{p12_password} -A -t cert -f pkcs12 -k #{keychain_path}")
-      # sh("security set-key-partition-list -S apple-tool:,apple: -k #{keychain_password} #{keychain_path}")
-      # sh("security list-keychain -d user -s #{keychain_path}")
+      import_certificate(
+        certificate_path: certificate_path, 
+        certificate_password: p12_password,
+        keychain_name: 'fastlane_tmp_keychain',
+        keychain_password: keychain_password
+      )
 
-      # # Copy the provisioning profile to the necessary location
-      # profiles_dir = File.expand_path("~/Library/MobileDevice/Provisioning Profiles")
-      # FileUtils.mkdir_p(profiles_dir)
-      # FileUtils.cp(provisioning_profile_path, profiles_dir)
+      install_provisioning_profile(
+        path: provisioning_profile_path
+      )
 
-      # UI.success("Code signing setup completed successfully.")
+      # Copy the provisioning profile to the necessary location
+      profiles_dir = File.expand_path("~/Library/MobileDevice/Provisioning Profiles")
+      FileUtils.mkdir_p(profiles_dir)
+      FileUtils.cp(provisioning_profile_path, profiles_dir)
+
+      # Clean up temporary files
+      UI.success("Code signing setup completed successfully.")
     end
 end
