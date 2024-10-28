@@ -10,6 +10,10 @@
         // productTypes: ["Alamofire": .framework,] 
         productTypes: [
             "dskit-swiftui": .framework,
+// ADDED --
+            "SDWebImage": .framework,
+            "SDWebImage-SwiftUI": .framework,
+// ADDED --
             "Keys": .framework,
             "KeysInterfaces": .framework
         ],
