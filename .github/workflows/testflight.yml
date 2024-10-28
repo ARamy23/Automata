@@ -30,6 +30,10 @@ jobs:
           install: false # [default: true] run `mise install`
           cache: true # [default: true] cache mise using GitHub's cache
 
+      - name: Setup Certs and Profiles on CI
+        run: |
+          bundle exec fastlane prepare_ci_certs_profiles
+
       - name: Distribute to TestFlight
         run: |
           bundle exec fastlane distribute_to_testflight env:"ALPHA"

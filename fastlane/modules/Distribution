@@ -5,10 +5,11 @@ require 'dotenv'
 
 platform :ios do
   lane :prepare_build_for_distribution do 
-    onboard
+    if ENV['CI'] == false
+      onboard
+    end
     bump_build_number
     sh("tuist generate -p ..")
-    UI.header get_build_number
     build_app(
       scheme: ENV['SCHEME'],
       export_method: "app-store",
