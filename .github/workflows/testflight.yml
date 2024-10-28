@@ -3,7 +3,7 @@ name: Distribute to TestFlight
 on:
   push:
     branches:
-      - m04-github-actions
+      - m04-02-improvements
 
 jobs:
   distribute:
