@@ -18,10 +18,6 @@ jobs:
           ruby-version: '3.1.2'
           bundler-cache: true
 
-      # - name: Install dependencies
-      #   run: |
-      #     brew bundle
-
       - name: Set up environment variables
         run: |
           echo "${{ secrets.FASTLANE_ENV_AUTH_FILE }}" > fastlane/configs/default/.env.default.auth

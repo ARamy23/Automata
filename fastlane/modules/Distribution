@@ -8,7 +8,7 @@ platform :ios do
     onboard
     bump_build_number
     sh("tuist generate -p ..")
-    get_build_number
+    UI.header get_build_number
     build_app(
       scheme: ENV['SCHEME'],
       export_method: "app-store",

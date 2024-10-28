@@ -29,7 +29,7 @@ platform :ios do
     latest_build_number = latest_testflight_build_number(
       app_identifier: ENV['SELECTED_BUNDLE_ID'],
       version: version
-    )
+    ) + 1
 
     UI.success "🔥 Latest build number on TestFlight is #{latest_build_number}"
     # Increment the build number by 1

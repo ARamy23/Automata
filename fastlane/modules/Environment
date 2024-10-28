@@ -50,119 +50,110 @@ platform :ios do
     end
   end
   
-    desc "Generates Project + Secrets + Makes sure Mise & Tuist are corectly configured"
-    lane :generate_project do
-      sh('rake setup_secrets')
-      sh("mise install tuist@4.27.0")
-      sh("mise use tuist@4.27.0")
-      sh("tuist install -p ..")
-      sh("tuist cache -p ..")
+  desc "Generates Project + Secrets + Makes sure Mise & Tuist are corectly configured"
+  lane :generate_project do
+    sh('rake setup_secrets')
+    sh("mise install tuist@4.27.0")
+    sh("mise use tuist@4.27.0")
+    sh("tuist install -p ..")
+    sh("tuist cache -p ..")
 
-      UI.message "Verifying that generation was successful..."
-      if File.exist?("../#{ENV['PROJECT']}") == false
-        UI.crash! "💥 Whoops, looks like you forgot to generate your project file, "
-      else 
-        UI.success "✅ Project file generated successfully!"
-      end
-
-      UI.message "Printing out the contents of the parent directory..."
+    UI.message "Verifying that generation was successful..."
+    if File.exist?("../#{ENV['PROJECT']}") == false
+      UI.crash! "💥 Whoops, looks like you forgot to generate your project file, "
+    else 
+      UI.success "✅ Project file generated successfully!"
     end
 
-
-
-
-
-
-
+    UI.message "Printing out the contents of the parent directory..."
+  end
 
   desc "Prepare .env file for GitHub Actions CI by extracting certificates and profiles directly from match repo"
   lane :prepare_ci_certs_profiles do
-    Dotenv.load "configs/default/.env.default.auth"
-    Dotenv.load "configs/ci/.env.default.ci.settings"
+      Dotenv.load "configs/default/.env.default.auth"
+      Dotenv.load "configs/ci/.env.default.ci.settings"
 
-    if File.exist?("configs/ci/.env.default.ci.match") == false
-      UI.crash! "💥 Whoops, looks like you forgot to set up your .env.default.ci.match file, "
+      if File.exist?("configs/ci/.env.default.ci.match") == false
+        UI.crash! "💥 Whoops, looks like you forgot to set up your .env.default.ci.match file, "
+      end
+
+      Dotenv.load "configs/ci/.env.default.ci.match"
+      # Load repository URL and encryption password from environment variables
+      match_repo_url = ENV["MATCH_GIT_URL"]
+      match_repo_path = "./match_repo"  # Temporary directory to clone the match repo
+
+      # Clone the match repository
+      sh("git clone #{match_repo_url} #{match_repo_path}")
+
+      # Locate encrypted .p12 certificate and provisioning profile in the cloned repo
+      cert_path = Dir["#{match_repo_path}/certs/distribution/*.p12"].first
+      profile_path = Dir["#{match_repo_path}/profiles/appstore/*.mobileprovision"].first
+
+      # Ensure the files were downloaded and located correctly
+      if cert_path.nil? || profile_path.nil?
+        UI.user_error!("Could not locate certificate or provisioning profile in the match repository.")
+      end
+
+      # Convert files directly to Base64 format
+      cert_base64 = `base64 -i "#{cert_path}"`.strip
+      profile_base64 = `base64 -i "#{profile_path}"`.strip
+
+      # Set passwords for keychain and .p12 file
+      p12_password = ENV["MATCH_PASSWORD"] || "your_p12_password"
+      keychain_password = ENV["KEYCHAIN_PASSWORD"] || "your_keychain_password"
+
+      # Prepare .env file content
+      env_content = <<~ENV
+        # Environment variables for CI/CD pipeline with match repo secrets
+        BUILD_CERTIFICATE_BASE64="#{cert_base64}"
+        P12_PASSWORD="#{p12_password}"
+        BUILD_PROVISION_PROFILE_BASE64="#{profile_base64}"
+        KEYCHAIN_PASSWORD="#{keychain_password}"
+      ENV
+
+      # Write the .env file to the specified path
+      File.write("configs/ci/.env.default.ci.match", env_content)
+      UI.success(".env file generated at 'fastlane/configs/ci/.env.default.ci.match' with required secrets for CI.")
+
+      # Clean up cloned repository
+      sh("rm -rf #{match_repo_path}")
+
     end
-
-    Dotenv.load "configs/ci/.env.default.ci.match"
-    # Load repository URL and encryption password from environment variables
-    match_repo_url = ENV["MATCH_GIT_URL"]
-    match_repo_path = "./match_repo"  # Temporary directory to clone the match repo
-
-    # Clone the match repository
-    sh("git clone #{match_repo_url} #{match_repo_path}")
-
-    # Locate encrypted .p12 certificate and provisioning profile in the cloned repo
-    cert_path = Dir["#{match_repo_path}/certs/distribution/*.p12"].first
-    profile_path = Dir["#{match_repo_path}/profiles/appstore/*.mobileprovision"].first
-
-    # Ensure the files were downloaded and located correctly
-    if cert_path.nil? || profile_path.nil?
-      UI.user_error!("Could not locate certificate or provisioning profile in the match repository.")
-    end
-
-    # Convert files directly to Base64 format
-    cert_base64 = `base64 -i "#{cert_path}"`.strip
-    profile_base64 = `base64 -i "#{profile_path}"`.strip
-
-    # Set passwords for keychain and .p12 file
-    p12_password = ENV["MATCH_PASSWORD"] || "your_p12_password"
-    keychain_password = ENV["KEYCHAIN_PASSWORD"] || "your_keychain_password"
-
-    # Prepare .env file content
-    env_content = <<~ENV
-      # Environment variables for CI/CD pipeline with match repo secrets
-      BUILD_CERTIFICATE_BASE64="#{cert_base64}"
-      P12_PASSWORD="#{p12_password}"
-      BUILD_PROVISION_PROFILE_BASE64="#{profile_base64}"
-      KEYCHAIN_PASSWORD="#{keychain_password}"
-    ENV
-
-    # Write the .env file to the specified path
-    File.write("configs/ci/.env.default.ci.match", env_content)
-    UI.success(".env file generated at 'fastlane/configs/ci/.env.default.ci.match' with required secrets for CI.")
-
-    # Clean up cloned repository
-    sh("rm -rf #{match_repo_path}")
-
-  end
-
-
 
   desc "Setup Apple certificate and provisioning profile for CI/CD"
   lane :ci_import_certs_profiles_locally do
-    # Load environment variables from .env file if needed
+      # Load environment variables from .env file if needed
 
-    # Define paths for the temporary certificate, provisioning profile, and keychain
-    certificate_path = "#{Dir.tmpdir}/build_certificate.p12"
-    provisioning_profile_path = "#{Dir.tmpdir}/build_pp.mobileprovision"
-    keychain_path = "#{Dir.tmpdir}/app-signing.keychain-db"
+      # Define paths for the temporary certificate, provisioning profile, and keychain
+      certificate_path = "#{Dir.tmpdir}/build_certificate.p12"
+      provisioning_profile_path = "#{Dir.tmpdir}/build_pp.mobileprovision"
+      keychain_path = "#{Dir.tmpdir}/app-signing.keychain-db"
 
-    UI.message ENV["BUILD_CERTIFICATE_BASE64"]
-    UI.message ENV["BUILD_PROVISION_PROFILE_BASE64"]
-    UI.message ENV["KEYCHAIN_PASSWORD"]
-    UI.message ENV["P12_PASSWORD"]
+      UI.message ENV["BUILD_CERTIFICATE_BASE64"]
+      UI.message ENV["BUILD_PROVISION_PROFILE_BASE64"]
+      UI.message ENV["KEYCHAIN_PASSWORD"]
+      UI.message ENV["P12_PASSWORD"]
 
-    # Decode the Base64 certificate and provisioning profile
-    # File.open(certificate_path, "wb") { |f| f.write(Base64.decode64(ENV["BUILD_CERTIFICATE_BASE64"])) }
-    # File.open(provisioning_profile_path, "wb") { |f| f.write(Base64.decode64(ENV["BUILD_PROVISION_PROFILE_BASE64"])) }
+      # Decode the Base64 certificate and provisioning profile
+      # File.open(certificate_path, "wb") { |f| f.write(Base64.decode64(ENV["BUILD_CERTIFICATE_BASE64"])) }
+      # File.open(provisioning_profile_path, "wb") { |f| f.write(Base64.decode64(ENV["BUILD_PROVISION_PROFILE_BASE64"])) }
 
-    # # Create and configure a temporary keychain
-    # keychain_password = ENV["KEYCHAIN_PASSWORD"]
-    # p12_password = ENV["P12_PASSWORD"]
+      # # Create and configure a temporary keychain
+      # keychain_password = ENV["KEYCHAIN_PASSWORD"]
+      # p12_password = ENV["P12_PASSWORD"]
 
-    # sh("security create-keychain -p #{keychain_password} #{keychain_path}")
-    # sh("security set-keychain-settings -lut 21600 #{keychain_path}")
-    # sh("security unlock-keychain -p #{keychain_password} #{keychain_path}")
-    # sh("security import #{certificate_path} -P #{p12_password} -A -t cert -f pkcs12 -k #{keychain_path}")
-    # sh("security set-key-partition-list -S apple-tool:,apple: -k #{keychain_password} #{keychain_path}")
-    # sh("security list-keychain -d user -s #{keychain_path}")
+      # sh("security create-keychain -p #{keychain_password} #{keychain_path}")
+      # sh("security set-keychain-settings -lut 21600 #{keychain_path}")
+      # sh("security unlock-keychain -p #{keychain_password} #{keychain_path}")
+      # sh("security import #{certificate_path} -P #{p12_password} -A -t cert -f pkcs12 -k #{keychain_path}")
+      # sh("security set-key-partition-list -S apple-tool:,apple: -k #{keychain_password} #{keychain_path}")
+      # sh("security list-keychain -d user -s #{keychain_path}")
 
-    # # Copy the provisioning profile to the necessary location
-    # profiles_dir = File.expand_path("~/Library/MobileDevice/Provisioning Profiles")
-    # FileUtils.mkdir_p(profiles_dir)
-    # FileUtils.cp(provisioning_profile_path, profiles_dir)
+      # # Copy the provisioning profile to the necessary location
+      # profiles_dir = File.expand_path("~/Library/MobileDevice/Provisioning Profiles")
+      # FileUtils.mkdir_p(profiles_dir)
+      # FileUtils.cp(provisioning_profile_path, profiles_dir)
 
-    # UI.success("Code signing setup completed successfully.")
-  end
+      # UI.success("Code signing setup completed successfully.")
+    end
 end
