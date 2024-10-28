@@ -3,7 +3,7 @@ name: Distribute to TestFlight
 on:
   push:
     branches:
-      - ramy/m03-10-versioning
+      - mostafa/m03-10-versioningg
 
 jobs:
   distribute:
@@ -27,6 +27,7 @@ jobs:
           version: 2024.8.15
           install: false
           cache: true
+
 # MARK: - Distribution
       - name: Set up environment variables
         run: |
