@@ -20,6 +20,10 @@ platform :ios do
     Dotenv.load "configs/default/.env.default.metadata"
 
     UI.success "Environment Variables are set up successfully!"
+
+    if ENV['CI']
+      onboard
+    end
   end
 
   lane :configure_release_environment_variables do |options|
@@ -37,5 +41,23 @@ platform :ios do
     else
       UI.user_error! "Whoops, looks like you picked a wrong environment this time, its ok, happens to the best of us, now re-run me again 😛"
     end
+  end
+
+  desc "Generates Project + Secrets + Makes sure Mise & Tuist are corectly configured"
+  lane :generate_project do
+    sh('rake setup_secrets')
+    sh("mise install tuist@4.27.0")
+    sh("mise use tuist@4.27.0")
+    sh("tuist install -p ..")
+    sh("tuist cache -p ..")
+
+    UI.message "Verifying that generation was successful..."
+    if File.exist?("../#{ENV['PROJECT']}") == false
+      UI.crash! "💥 Whoops, looks like you forgot to generate your project file, "
+    else 
+      UI.success "✅ Project file generated successfully!"
+    end
+
+    UI.message "Printing out the contents of the parent directory..."
   end
 end
