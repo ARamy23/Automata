@@ -89,3 +89,6 @@ Packages/KeysInterfaces/**/*
 *.xcworkspace/**/*
 *.xcodeproj/**/*
 fastlane/.env.fastlane.auth
+fastlane/configs/default/.env.default.auth
+.ruby-version
+Package.resolved

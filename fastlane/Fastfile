@@ -32,8 +32,8 @@ platform :ios do
   lane :distribute_to_testflight do |options|
     configure_release_environment_variables(options)
     prepare_build_for_distribution
-    upload_to_testflight
-    clean_build_artifacts
+    # upload_to_testflight
+    # clean_build_artifacts
   end
 
   lane :distribute_to_appstore do |options|

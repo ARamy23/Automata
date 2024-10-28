@@ -4,7 +4,7 @@ require 'json'
 require 'dotenv'
 
 platform :ios do
-  lane :increment_build_number do 
+  lane :bump_build_number do 
     ## Within Tuist/ProjectDescriptionHelpers/Project+Configs.swift, we have the following:
     ## static let version = "1.0.1"
     ## static let buildNumber = "1"
@@ -49,8 +49,12 @@ platform :ios do
       message: "Incremented build number to #{build_number}",
       allow_nothing_to_commit: true
     )
-    push_to_git_remote
 
+    if ENV['CI'] == false 
+      push_to_git_remote
+    end
+
+    sh('tuist generate -p ..')
     UI.success "Successfully incremented the build number to #{build_number}"
   end
 end

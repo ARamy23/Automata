@@ -62,8 +62,20 @@ task :install_rbenv do
     puts "💎 rbenv init already in .zprofile, skipping..."
   end
 
-  system("rbenv install 3.1.2")
+  puts "👀 Checking if ruby 3.1.2 exists..."
+
+  unless system("rbenv versions | grep 3.1.2 > /dev/null")
+    puts "💎 Installing Ruby 3.1.2..."
+    system("sudo rbenv install -s 3.1.2")
+    puts "✅ Ruby 3.1.2 installed."
+  else
+    puts "💎 Ruby 3.1.2 already installed, skipping..."
+  end
+
+  puts "🔧 Setting local Ruby version to 3.1.2..."
   system("rbenv local 3.1.2")
+
+  puts "🔧 Running bundle install..."
   system("bundle install")
 end
 
@@ -123,8 +135,11 @@ task :setup_tuist do
   system("mise install tuist@4.27.0")
   puts "✅ Tuist installed."
   system("mise use tuist@4.27.0")
-  puts "🔧 Generating project with Tuist..."
+  puts "🔧 Setting up Tuist..."
   system("tuist install")
+  puts "⚙️ Caching Tuist dependencies..."
+  system("tuist cache")
+  puts "🔧 Generating project with Tuist..."
   system("tuist generate")
   puts "✅ Project generated with Tuist."
 end
@@ -132,9 +147,17 @@ end
 desc "Source Shell Profiles"
 task :source_shell_profiles do
   File.open('/tmp/temp_script.sh', 'w') do |file|
-    file.puts 'source ~/.zshrc'
-    file.puts 'source ~/.zprofile'
-    file.puts 'source ~/.zshenv'
+    if File.exist?(ZSHENV_PATH)
+      file.puts 'source ~/.zshrc'
+    end
+    
+    if File.exist?(ZPROFILE_PATH)
+      file.puts 'source ~/.zprofile'
+    end 
+
+    if File.exist?(ZSHRC_PATH)
+      file.puts 'source ~/.zshenv'
+    end
   end
 
   puts "🔧 Sourcing shell profiles..."
