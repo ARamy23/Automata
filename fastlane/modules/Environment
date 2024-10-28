@@ -10,6 +10,7 @@ platform :ios do
       UI.message "🚀 Running on CI Env Detected"
       Dotenv.load "configs/ci/.env.default.ci.settings"
       setup_ci
+      onboard
     end
 
     UI.header "Setting up Environment Variables..."
