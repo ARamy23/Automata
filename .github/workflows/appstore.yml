@@ -1,10 +1,9 @@
-name: Distribute to TestFlight
+name: Distribute to AppStore
 
 on:
   push:
     branches:
-## CHANGED
-      - develop
+      - main
 
 jobs:
   distribute:
@@ -39,6 +38,6 @@ jobs:
           bundle exec fastlane generate_project
           tuist generate
       
-      - name: Upload to Testflight
+      - name: Upload to AppStore
         run: |
-          bundle exec fastlane distribute_to_testflight env:ALPHA
+          bundle exec fastlane distribute_to_appstore env:ALPHA
