@@ -38,7 +38,7 @@ jobs:
         run: |
           tuist test
   danger:
-    runs-on: ubuntu-latest
+    runs-on: macos-13
     if: github.event_name  == 'pull_request' # if only run pull request when multiple trigger workflow
     steps:
     - name: Checkout the code
