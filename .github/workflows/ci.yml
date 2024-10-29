@@ -1,18 +1,15 @@
-name: Distribute to TestFlight
+name: CI Checks
 
 on:
-  push:
-    branches:
-      - ramy/m03-10-versioning
+  pull_request:
 
 jobs:
-  distribute:
+  build_test:
     runs-on: macos-13
     steps:
       - name: Checkout the code
         uses: actions/checkout@v3
 
-# MARK: - Setup Environment
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
@@ -27,7 +24,6 @@ jobs:
           version: 2024.8.15
           install: false
           cache: true
-# MARK: - Distribution
       - name: Set up environment variables
         run: |
           echo "${{ secrets.FASTLANE_ENV_AUTH_FILE }}" > fastlane/configs/default/.env.default.auth
@@ -38,6 +34,27 @@ jobs:
           bundle exec fastlane generate_project
           tuist generate
       
-      - name: Upload to Testflight
+      - name: Check if Tests pass
         run: |
-          bundle exec fastlane distribute_to_testflight env:ALPHA
+          tuist test
+  danger:
+    runs-on: macos-13
+    if: github.event_name  == 'pull_request' # if only run pull request when multiple trigger workflow
+    steps:
+    - name: Checkout the code
+      uses: actions/checkout@v4
+
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: '3.1.2'
+        bundler-cache: true
+
+    - uses: MeilCli/danger-action@v6
+      with:
+        plugins_file: 'Gemfile'
+        install_path: 'vendor/bundle'
+        danger_file: 'Dangerfile'
+        danger_id: 'danger-pr'
+      env:
+        DANGER_GITHUB_API_TOKEN: ${{ secrets.DANGER_GITHUB_TOKEN }}
