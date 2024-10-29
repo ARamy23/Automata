@@ -1,0 +1,14 @@
+git_url("https://github.com/ordis-23/Automata-Certs-Keys.git")
+
+storage_mode("git")
+
+type("development") # The default type, can be: appstore, adhoc, enterprise or development
+
+app_identifier(
+  [
+    "com.automata.automata.example.debug",
+    "com.automata.automata.example.alpha",
+    "com.automata.automata.example.beta",
+    "com.automata.automata.example",
+  ]
+)
