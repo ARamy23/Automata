@@ -29,6 +29,12 @@ platform :ios do
     setup_environment
   end
 
+## ADDED
+  error do |lane, exception, options|
+    notify_slack(message: "Error: #{exception.message}", success: false)
+  end
+## ADDED
+
   lane :distribute_to_testflight do |options|
     configure_release_environment_variables(options)
     prepare_build_for_distribution

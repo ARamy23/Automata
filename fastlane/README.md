@@ -39,6 +39,14 @@ Sets up Environment Variables
 
 
 
+### ios generate_project
+
+```sh
+[bundle exec] fastlane ios generate_project
+```
+
+Generates Project + Secrets + Makes sure Mise & Tuist are corectly configured
+
 ### ios prepare_auth_for_match
 
 ```sh
@@ -70,6 +78,14 @@ Creates Service Account Access for demo purposes
 ```
 
 Prepare deliver lanes environment for seamless delivery
+
+### ios notify_slack
+
+```sh
+[bundle exec] fastlane ios notify_slack
+```
+
+Onboard a new member to the project
 
 ### ios increment_build_number
 

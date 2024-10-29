@@ -1,0 +1,21 @@
+require 'colored'
+require 'yaml'
+require 'json'
+require 'dotenv'
+
+platform :ios do
+  desc "Onboard a new member to the project"
+  lane :notify_slack do |options|
+    UI.header "Notifying Slack channel..."
+    UI.message "Sending message to Slack channel..."
+    slack(
+      message: options[:message], # Required, the message to send to Slack.
+      success: options[:success] || true,        # Optional, defaults to true.
+      payload: {  # Optional, lets you specify any number of your own Slack attachments.
+        "Build Date" => Time.new.to_s,
+        "Built by" => "Jenkins",
+      },
+      default_payloads: [:git_branch, :git_author], # Optional, lets you specify default payloads to include. Pass an empty array to suppress all the default payloads.
+    )
+  end
+end
