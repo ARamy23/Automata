@@ -60,25 +60,20 @@ jobs:
         DANGER_GITHUB_API_TOKEN: ${{ secrets.DANGER_GITHUB_TOKEN }}
 
 ## ADDED
-  on_success:
-    runs-on: macos-13
-    if: >-
-      github.event.state == 'success'
-      steps:
-        - env:
+  # Success notification step
+    - name: Notify Success on Slack
+      if: success()  # Only runs if all previous steps succeeded
+      env:
             DESCRIPTION: ${{ github.event.description }}
-          run: |
+            run: |
             bundle exec fastlane notify_slack message:"${DESCRIPTION}" success:true
 
-  on_failure:
-    runs-on: macos-13
-    if: >-
-      github.event.state == 'error' ||
-      github.event.state == 'failure'
-      steps:
-        - env:
-            DESCRIPTION: ${{ github.event.description }}
+      # Failure notification step
+    - name: Notify Failure on Slack
+      if: failure()  # Only runs if any previous step failed
+      env:
+          DESCRIPTION: ${{ github.event.description }}
           run: |
-            bundle exec fastlane notify_slack message:"${DESCRIPTION}" success:false
+          bundle exec fastlane notify_slack message:"${DESCRIPTION}" success:false
 
 ## ADDED
