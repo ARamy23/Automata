@@ -73,6 +73,7 @@ fastlane/report.xml
 fastlane/Preview.html
 fastlane/screenshots/**/*.png
 fastlane/test_output
+fastlane/configs/.env.default.auth
 
 # Code Injection
 #
@@ -80,3 +81,11 @@ fastlane/test_output
 # https://github.com/johnno1962/injectionforxcode
 
 iOSInjectionProject/
+
+.DS_Store
+.env
+Packages/Keys/**/*
+Packages/KeysInterfaces/**/*
+*.xcworkspace/**/*
+*.xcodeproj/**/*
+fastlane/.env.fastlane.auth

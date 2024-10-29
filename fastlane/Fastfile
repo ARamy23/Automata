@@ -1,0 +1,45 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+require 'colored'
+require 'yaml'
+require 'json'
+require 'dotenv'
+
+# Uncomment the line if you want fastlane to automatically update itself
+Dir.glob('modules/*').each { |r| 
+  UI.important("Importing Fastfile from #{r}")
+  import r 
+}
+
+default_platform(:ios)
+
+
+platform :ios do
+  before_all do
+    setup_environment
+  end
+
+  lane :distribute_to_testflight do |options|
+    configure_release_environment_variables(options)
+    prepare_build_for_distribution
+    upload_to_testflight
+    clean_build_artifacts
+  end
+
+  lane :distribute_to_appstore do |options|
+    configure_release_environment_variables(options)
+    prepare_build_for_distribution
+    upload_to_app_store
+    clean_build_artifacts
+  end
+end

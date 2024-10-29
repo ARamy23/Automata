@@ -1,0 +1,62 @@
+require 'colored'
+require 'yaml'
+require 'json'
+require 'dotenv'
+
+platform :ios do
+  lane :increment_build_number do 
+    ## Within Tuist/ProjectDescriptionHelpers/Project+Configs.swift, we have the following:
+    ## static let version = "1.0.1"
+    ## static let buildNumber = "1"
+    
+    # Read the current version and build number from the Project+Configs.swift file
+    # Increment the build number by 1
+    # Write the new build number back to the Project+Configs.swift file
+    # Commit the changes to the repository
+    # Push the changes to the repository
+
+    # Read the current version and build number from the Project+Configs.swift file
+
+    path = "../Tuist/ProjectDescriptionHelpers/Project+Configs.swift"
+    UI.message "⚙️ Reading version & build number from Project+Configs.swift file..."
+    version = File.read(path).match(/static let version = "(.*?)"/)[1]
+    build_number = File.read(path).match(/static let buildNumber = "(.*?)"/)[1]
+
+    UI.success "🤔 Successfully read version #{version} and build number #{build_number} from Project+Configs.swift file"
+    # Check latest build number on TestFlight
+
+    UI.message "🔍 Checking latest build number on TestFlight..."
+    latest_build_number = latest_testflight_build_number(
+      app_identifier: ENV['SELECTED_BUNDLE_ID'],
+      version: version
+    )
+
+    UI.success "🔥 Latest build number on TestFlight is #{latest_build_number}"
+    # Increment the build number by 1
+    UI.message "🚀 Incrementing the build number by 1..."
+    build_number = latest_build_number.to_i + 1
+
+    # Write the new build number back to the Project+Configs.swift file
+    UI.message "📝 Writing the new build number back to the Project+Configs.swift file..."
+    new_content = File.read(path).gsub(/static let buildNumber = "(.*?)"/, "static let buildNumber = \"#{build_number}\"")
+    File.open(path, "w") { |file| file.puts new_content }
+
+# ADDED ----
+    if ENV["CI"]
+      UI.message "🚀 Running on CI Env Detected, skipping pushing to git"
+    else 
+      # Commit the changes to the repository
+      UI.message "📦 Committing the changes to the repository..."
+      git_add(path: "*")
+      git_commit(
+        path: "*", 
+        message: "Incremented build number to #{build_number}",
+        allow_nothing_to_commit: true
+      )
+      push_to_git_remote
+    end 
+
+# ADDED ----
+    UI.success "Successfully incremented the build number to #{build_number}"
+  end
+end
