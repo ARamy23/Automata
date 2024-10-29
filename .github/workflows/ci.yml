@@ -1,12 +1,10 @@
-name: Distribute to TestFlight
+name: CI Checks
 
 on:
-  push:
-    branches:
-      - develop
+  pull_request:
 
 jobs:
-  distribute:
+  test_check:
     runs-on: macos-13
     steps:
       - name: Checkout the code
@@ -29,15 +27,11 @@ jobs:
           version: 2024.8.15 # [default: latest] mise version to install
           install: false # [default: true] run `mise install`
           cache: true # [default: true] cache mise using GitHub's cache
-
-      - name: Setup Certs and Profiles on CI
-        run: |
-          bundle exec fastlane ci_import_certs_profiles_locally
-
       - name: Generate Project
         run: |
           bundle exec fastlane generate_project
-
-      - name: Distribute to TestFlight
+          tuist generate
+      
+      - name: Run Tests
         run: |
-          bundle exec fastlane distribute_to_testflight env:"ALPHA"
+            tuist test  

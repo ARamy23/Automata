@@ -1,9 +1,9 @@
-name: Build & Test Check
+name: Distribute to TestFlight
 
 on:
   push:
     branches:
-      - m04-03-ci
+      - main
 
 jobs:
   distribute:
@@ -29,15 +29,15 @@ jobs:
           version: 2024.8.15 # [default: latest] mise version to install
           install: false # [default: true] run `mise install`
           cache: true # [default: true] cache mise using GitHub's cache
+
+      - name: Setup Certs and Profiles on CI
+        run: |
+          bundle exec fastlane ci_import_certs_profiles_locally
+
       - name: Generate Project
         run: |
           bundle exec fastlane generate_project
-          tuist generate
 
-      - name: Build Check
+      - name: Distribute to TestFlight
         run: |
-          tuist build
-      
-      - name: Run Tests
-        run: |
-            tuist test
+          bundle exec fastlane distribute_to_appstore env:"ALPHA"
