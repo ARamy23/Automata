@@ -41,16 +41,22 @@ platform :ios do
     new_content = File.read(path).gsub(/static let buildNumber = "(.*?)"/, "static let buildNumber = \"#{build_number}\"")
     File.open(path, "w") { |file| file.puts new_content }
 
-    # Commit the changes to the repository
-    UI.message "📦 Committing the changes to the repository..."
-    git_add(path: "*")
-    git_commit(
-      path: "*", 
-      message: "Incremented build number to #{build_number}",
-      allow_nothing_to_commit: true
-    )
-    push_to_git_remote
+# ADDED ----
+    if ENV["CI"]
+      UI.message "🚀 Running on CI Env Detected, skipping pushing to git"
+    else 
+      # Commit the changes to the repository
+      UI.message "📦 Committing the changes to the repository..."
+      git_add(path: "*")
+      git_commit(
+        path: "*", 
+        message: "Incremented build number to #{build_number}",
+        allow_nothing_to_commit: true
+      )
+      push_to_git_remote
+    end 
 
+# ADDED ----
     UI.success "Successfully incremented the build number to #{build_number}"
   end
 end
